@@ -1,0 +1,35 @@
+﻿@model CategorieViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome bij @ViewData["Title"]</h1>
+
+    
+
+    
+    @if (Model.Categories != null)
+    {
+        foreach (var category in Model.Categories)
+        {
+            <p>ID: @category.Id - Title: @category.Title</p>
+        }
+    }
+    else
+    {
+        <p>Not working</p>
+    }
+
+    
+   @*  @foreach (var blog in Model.BlogViewModel.BlogList)
+    {
+        <p>@blog.Id - @blog.Title</p>
+    } *@
+
+
+    
+
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
