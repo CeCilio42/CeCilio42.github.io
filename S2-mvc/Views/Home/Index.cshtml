@@ -1,26 +1,28 @@
-﻿@model CategorieViewModel
+﻿@model S2_mvc.Models.CombinedViewModel
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome bij @ViewData["Title"]</h1>
-
     
 
     
-    @if (Model.Categories != null)
-    {
-        foreach (var category in Model.Categories)
-        {
-            <p>ID: @category.Id - Title: @category.Title</p>
-        }
-    }
-    else
-    {
-        <p>Not working</p>
-    }
+
+    
+    
+
+<!-- Access CategorieViewModel properties -->
+@foreach (var category in Model.CategorieViewModel.Categories)
+{
+    <p>@category.Id - @category.Title</p>
+}
+
+<!-- Access BlogViewModel properties -->
+@foreach (var blog in Model.BlogViewModel.BlogList)
+{
+    <p>@blog.Id - @blog.Title</p>
+}
 
     
    @*  @foreach (var blog in Model.BlogViewModel.BlogList)

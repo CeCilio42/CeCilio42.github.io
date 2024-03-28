@@ -41,14 +41,16 @@ namespace S2_mvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(CombinedViewModel combinedViewModel)
+        public IActionResult Index(CategorieViewModel categorieViewModel, BlogViewModel blogViewModel)
         {
-            // Access the CategorieViewModel and BlogViewModel from combinedViewModel
-            var categorieViewModel = combinedViewModel.CategorieViewModel;
-            var blogViewModel = combinedViewModel.BlogViewModel;
+            // Create an instance of CombinedViewModel and set its properties
+            var combinedViewModel = new CombinedViewModel
+            {
+                CategorieViewModel = categorieViewModel,
+                BlogViewModel = blogViewModel
+            };
 
-            // Process the data as needed
-
+            // Return the view with the CombinedViewModel
             return View("Index", combinedViewModel);
         }
 
