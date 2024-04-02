@@ -2,6 +2,7 @@
 using DataLogicLayer.Entitys;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,5 +42,8 @@ namespace DataLogicLayer.DaL
             return blogs;
         }
 
+
+
+ 
     }
 }

@@ -17,6 +17,12 @@ namespace S2_mvc.Controllers
             _logger = logger;
         }
 
+        [HttpPost]
+        public IActionResult CreateBlog(Blog blog)
+        {
+            return View(blog);
+        }
+        
         public IActionResult Blogs()
         {
             BlogBusinessLogic blogBusinessLogic = new BlogBusinessLogic();
@@ -39,22 +45,6 @@ namespace S2_mvc.Controllers
 
             return View(categorieViewModel);
         }
-
-        [HttpPost]
-        public IActionResult Index(CategorieViewModel categorieViewModel, BlogViewModel blogViewModel)
-        {
-            // Create an instance of CombinedViewModel and set its properties
-            var combinedViewModel = new CombinedViewModel
-            {
-                CategorieViewModel = categorieViewModel,
-                BlogViewModel = blogViewModel
-            };
-
-            // Return the view with the CombinedViewModel
-            return View("Index", combinedViewModel);
-        }
-
-
 
         public IActionResult Privacy()
         {

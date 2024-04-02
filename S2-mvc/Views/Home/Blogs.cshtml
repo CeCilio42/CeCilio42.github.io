@@ -1,0 +1,31 @@
+﻿@model S2_mvc.Models.BlogViewModel
+
+@{
+    ViewData["Title"] = "Blogs";
+}
+
+<h1>Blogs</h1>
+
+<h4>BlogViewModel</h4>
+<hr />
+
+@foreach (var blog in Model.BlogList)
+{
+    <h4>@blog.Id - @blog.Title</h4>
+
+    <p>@blog.Text</p>
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Blogs">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="text"></input>
+                <input type="text"></input>
+
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

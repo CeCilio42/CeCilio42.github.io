@@ -1,37 +1,23 @@
-﻿@model S2_mvc.Models.CombinedViewModel
+﻿@model CategorieViewModel
 
-@{
-    ViewData["Title"] = "Home Page";
-}
 
-<div class="text-center">
+
+    <div class="text-center">
     
 
-    
+    @foreach (var category in Model.Categories)
+    {
+        <p>@category.Id - @category.Title</p>
+    }
 
-    
-    
+    @Html.ActionLink("Blogs", "Blogs", "Home")
 
-<!-- Access CategorieViewModel properties -->
-@foreach (var category in Model.CategorieViewModel.Categories)
-{
-    <p>@category.Id - @category.Title</p>
-}
-
-<!-- Access BlogViewModel properties -->
-@foreach (var blog in Model.BlogViewModel.BlogList)
-{
-    <p>@blog.Id - @blog.Title</p>
-}
-
+   
     
    @*  @foreach (var blog in Model.BlogViewModel.BlogList)
     {
         <p>@blog.Id - @blog.Title</p>
     } *@
 
-
     
-
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

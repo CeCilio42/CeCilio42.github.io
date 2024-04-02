@@ -15,13 +15,13 @@ namespace DataLogicLayer
         private string uid;
         private string password;
 
-        // Constructor
+        
         public DatabaseConnection()
         {
             Initialize();
         }
 
-        // Initialize connection parameters
+      
         private void Initialize()
         {
             server = "127.0.0.1";
