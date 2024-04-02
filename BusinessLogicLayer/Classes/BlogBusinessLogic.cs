@@ -13,12 +13,12 @@ namespace BusinessLogicLayer.Classes
     {
         List<Blog> blogs = new List<Blog> ();
 
-        private BlogDaL database = new BlogDaL();
+        private BlogRepository repository = new BlogRepository();
 
 
         public List<Blog> SetBlogs()
         {
-            blogs = database.SetBlog();
+            blogs = repository.GetBlogs();
             return blogs;
         }
         
