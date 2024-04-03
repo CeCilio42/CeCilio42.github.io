@@ -16,12 +16,16 @@ namespace BusinessLogicLayer.Classes
         private BlogRepository repository = new BlogRepository();
 
 
+
+        //Get All Blogs
         public List<Blog> SetBlogs()
         {
             blogs = repository.GetBlogs();
             return blogs;
         }
         
+
+        //Create New Blogs
 
 
     }

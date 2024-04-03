@@ -23,22 +23,24 @@ namespace S2_mvc.Controllers
             
         }
 
-        private readonly string _connectionString; // Set your actual connection string here
+        
 
         
         
-        public IActionResult Blogs(Blog blog)
+        public IActionResult Blogs()
         {
-
-            Blog blogModel = new Blog();
-            List<Blog> blogs;
-            blogs.Add(blogModel);
-   
+            BlogBusinessLogic blogBusinessLogic = new BlogBusinessLogic();
+            List<Blog> blogs = blogBusinessLogic.SetBlogs();
 
             BlogViewModel blogViewModel = new BlogViewModel();
             blogViewModel.BlogList = blogs;
 
-            return View(blogModel);
+            //Blog blogModel = new Blog();
+            //List<Blog> blogs;
+            //blogs.Add(blogModel);
+   
+
+            return View(blogViewModel);
         }
 
 
@@ -57,7 +59,6 @@ namespace S2_mvc.Controllers
         public IActionResult CreateBlog(Blog blog)
         {
             string query = "INSERT INTO blog (Title, Text) VALUES (@Title, @Text)";
-            Blog model = new Blog();
             using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
             {
                 connection.Open();
@@ -68,7 +69,8 @@ namespace S2_mvc.Controllers
                     cmd.ExecuteNonQuery();
                 }
             }
-            return View("Blogs", model);
+            
+            return RedirectToAction("Blogs");
         }
 
         public IActionResult Privacy()
