@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Classes
 {
-    public class BlogBusinessLogic
+    public class BlogService
     {
         List<Blog> blogs = new List<Blog> ();
 
@@ -18,15 +18,25 @@ namespace BusinessLogicLayer.Classes
 
 
         //Get All Blogs
-        public List<Blog> SetBlogs()
+        public List<Blog> GetBlogs()
         {
             blogs = repository.GetBlogs();
             return blogs;
         }
         
+        //Create Blog
+        public Blog CreateBlog(Blog blog)
+        {
+            repository.CreateBlog(blog);
 
-        //Create New Blogs
+            return blog;
+        }
 
+        //Delete Blog
+        public void DeleteBlog(int blogId) 
+        {
+            repository.DeleteBlogs(blogId);  
+        }
 
     }
 }

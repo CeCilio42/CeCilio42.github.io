@@ -6,14 +6,17 @@
 
 @foreach (var blog in Model.BlogList)
 {
-    <h4>@blog.Id - @blog.Title</h4>
-
-    <p>@blog.Text</p>
+    <article>
+        <h1>@blog.Title</h1>
+        <p>Published on April 4, 2024</p>
+        <p>@blog.Text</p>
+        <form asp-action="DeleteBlog" method="post">
+            <input type="hidden" name="id" value="@blog.Id" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </article>
 }
 
-<h1>Blogs</h1>
-
-<h4>Blog</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -22,14 +25,12 @@
             <div class="form-group">
                 <input type="text" name="Title" placeholder="Blog Title" />
                 <input type="text" name="Text" placeholder="Blog Text" />
-
+                <p></p>
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 

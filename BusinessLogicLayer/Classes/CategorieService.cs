@@ -5,12 +5,12 @@ using DataLogicLayer.DaL;
 
 namespace BusinessLogicLayer.Classes
 {
-    public class CategorieBusinessLogic
+    public class CategorieService
     {
         //CategorieViewModel categorieModel = new CategorieViewModel();
 
         List<Categorie> categories = new List<Categorie>();
-        private CategorieDaL database = new CategorieDaL();
+        private CategorieRepository database = new CategorieRepository();
 
         public List<Categorie> SetList()
         {

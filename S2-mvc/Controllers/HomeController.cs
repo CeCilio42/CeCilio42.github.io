@@ -15,61 +15,61 @@ namespace S2_mvc.Controllers
     public class HomeController : Controller
     {
         DatabaseConnection connection = new DatabaseConnection();
+        BlogService blogService = new BlogService();
         private readonly ILogger<HomeController> _logger;
-        
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            
+
         }
 
-        
 
-        
-        
+
+
+        //Get Blogs
         public IActionResult Blogs()
         {
-            BlogBusinessLogic blogBusinessLogic = new BlogBusinessLogic();
-            List<Blog> blogs = blogBusinessLogic.SetBlogs();
+            BlogService blogBusinessLogic = new BlogService();
+            List<Blog> blogs = blogBusinessLogic.GetBlogs();
 
             BlogViewModel blogViewModel = new BlogViewModel();
             blogViewModel.BlogList = blogs;
 
-            //Blog blogModel = new Blog();
-            //List<Blog> blogs;
-            //blogs.Add(blogModel);
-   
-
             return View(blogViewModel);
         }
 
-
+        //Get index page
         public IActionResult Index()
         {
-            CategorieBusinessLogic categorieBusinessLogic = new CategorieBusinessLogic();
+            CategorieService categorieBusinessLogic = new CategorieService();
             List<Categorie> categories = categorieBusinessLogic.SetList();
-            
+
             CategorieViewModel categorieViewModel = new CategorieViewModel();
             categorieViewModel.Categories = categories;
 
             return View(categorieViewModel);
         }
 
+
+        //Create blog
         [HttpPost]
         public IActionResult CreateBlog(Blog blog)
         {
-            string query = "INSERT INTO blog (Title, Text) VALUES (@Title, @Text)";
-            using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
-            {
-                connection.Open();
-                using (var cmd = new MySqlCommand(query, connection))
-                {
-                    cmd.Parameters.AddWithValue("@Title", blog.Title);
-                    cmd.Parameters.AddWithValue("@Text", blog.Text);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            
+            blogService.CreateBlog(blog);
+
+            return RedirectToAction("Blogs");
+        }
+
+
+        
+
+        // Your existing HttpPost method
+        [HttpPost]
+        public IActionResult DeleteBlog(int id)
+        {
+            blogService.DeleteBlog(id);
+
             return RedirectToAction("Blogs");
         }
 

@@ -3,12 +3,12 @@ using MySql.Data.MySqlClient;
 
 namespace DataLogicLayer.DaL
 {
-    public class CategorieDaL
+    public class CategorieRepository
     {
         DatabaseConnection connection = new DatabaseConnection();
 
 
-
+        //Get all categories
         public List<Categorie> SetList()
         {
 
