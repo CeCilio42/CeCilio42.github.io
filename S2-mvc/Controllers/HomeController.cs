@@ -61,10 +61,7 @@ namespace S2_mvc.Controllers
             return RedirectToAction("Blogs");
         }
 
-
-        
-
-        // Your existing HttpPost method
+        //Delete blog
         [HttpPost]
         public IActionResult DeleteBlog(int id)
         {
@@ -72,6 +69,24 @@ namespace S2_mvc.Controllers
 
             return RedirectToAction("Blogs");
         }
+
+        //Get selected blog for edit
+        public IActionResult EditBlog(int id)
+        {
+            EditBlogViewModel editBlogViewModel = new EditBlogViewModel();
+            editBlogViewModel.blog = blogService.ShowSelectedBlogToEdit(id);
+
+            return View(editBlogViewModel);
+        }
+
+        //Save edits on selected blog
+        public IActionResult SaveEditBlog(Blog blog)
+        {
+
+            blogService.EditBlog(blog);
+            return RedirectToAction("EditBlog"); 
+        }
+
 
         public IActionResult Privacy()
         {

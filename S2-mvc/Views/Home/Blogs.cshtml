@@ -4,33 +4,98 @@
     ViewData["Title"] = "Blogs";
 }
 
-@foreach (var blog in Model.BlogList)
-{
-    <article>
-        <h1>@blog.Title</h1>
-        <p>Published on April 4, 2024</p>
-        <p>@blog.Text</p>
-        <form asp-action="DeleteBlog" method="post">
-            <input type="hidden" name="id" value="@blog.Id" />
-            <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-    </article>
-}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateBlog">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="text" name="Title" placeholder="Blog Title" />
-                <input type="text" name="Text" placeholder="Blog Text" />
-                <p></p>
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        article {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello, Cilio</h1>
+        <form action="CreateBlog" method="post">
+            <input type="text" name="Title" placeholder="Blog Title">
+            <input type="text" name="Text" placeholder="Blog Text">
+            <input type="submit" value="Create">
         </form>
+
+        @foreach (var blog in Model.BlogList)
+        {
+            <article>
+                <h1>@blog.Title</h1>
+                <p>Published on April 4, 2024</p>
+                <p>@blog.Text</p>
+                <form action="DeleteBlog" method="post">
+                    <input type="hidden" name="id" value="@blog.Id">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <a href="@Url.Action("EditBlog", new { id = blog.Id })" class="btn btn-primary">Edit</a>
+            </article>
+        }
     </div>
-</div>
+</body>
+
 
 
 

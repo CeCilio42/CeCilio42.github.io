@@ -20,7 +20,7 @@ namespace BusinessLogicLayer
         {
             List<Blog> blogs = new List<Blog>();
 
-            string query = "SELECT `id`, `title`, `text` FROM `blog`";
+            string query = "SELECT `id`, `title`, `text` FROM `blog` ORDER BY `id` DESC";
 
             if (connection.OpenConnection())
             {
@@ -75,6 +75,54 @@ namespace BusinessLogicLayer
                 using (var cmd = new MySqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+        public Blog GetSelectedBlogToEdit(int id)
+        {
+            string query = "SELECT `id`, `title`, `text` FROM `blog` WHERE id = @id";
+            Blog blog = new Blog();
+
+            using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+            {
+                connection.Open();
+                using (var cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        
+                        blog.Id = Convert.ToInt32(dataReader["id"]);
+                        blog.Title = dataReader["title"].ToString();
+                        blog.Text = dataReader["text"].ToString();
+
+
+                    }
+                    dataReader.Close();
+                }
+
+                connection.Close();
+            }
+
+            return blog;
+        }
+
+
+        public void EditBlog(Blog blog)
+        {
+            string query = "UPDATE blog SET Title = @Title, Text = @Text WHERE Id = @Id";
+            using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+            {
+                connection.Open();
+                using (var cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Id", blog.Id);
+                    cmd.Parameters.AddWithValue("@Title", blog.Title);
+                    cmd.Parameters.AddWithValue("@Text", blog.Text);
                     cmd.ExecuteNonQuery();
                 }
             }

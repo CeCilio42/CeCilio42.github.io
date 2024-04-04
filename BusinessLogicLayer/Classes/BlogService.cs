@@ -38,5 +38,17 @@ namespace BusinessLogicLayer.Classes
             repository.DeleteBlogs(blogId);  
         }
 
+
+        public Blog ShowSelectedBlogToEdit(int id)
+        {
+            return repository.GetSelectedBlogToEdit(id);
+
+        }
+
+
+        public void EditBlog(Blog blog)
+        {
+            repository.EditBlog(blog);
+        }
     }
 }

@@ -2,25 +2,46 @@
 
 
 
-    <div class="text-center">
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My Cool App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            text-align: center;
+            padding: 20px;
+        }
 
-    @foreach (var category in Model.Categories)
-    {
-        <p>@category.Id - @category.Title</p>
-    }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
 
-    @Html.ActionLink("Blogs", "Blogs", "Home")
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+        }
 
-   
-    
-   @*  @foreach (var blog in Model.BlogViewModel.BlogList)
-    {
-        <p>@blog.Id - @blog.Title</p>
-    } *@
-
-    
-</div>
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Cool App</h1>
+    <p>Explore our awesome blogs and discover amazing content!</p>
+    <a href="@Url.Action("Blogs", "Home")" class="button">Start Reading</a>
+</body>
 
 
 
