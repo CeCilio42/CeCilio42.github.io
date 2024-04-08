@@ -74,18 +74,31 @@
 <body>
     <div class="container">
         <h1>Hello, Cilio</h1>
+        <hr>
+
+        <hr>
         <form action="CreateBlog" method="post">
             <input type="text" name="Title" placeholder="Blog Title">
             <input type="text" name="Text" placeholder="Blog Text">
+            <select name="CategoryID">
+                @foreach (var category in Model.categories)
+                {
+                    <option value="@category.Id">@category.Title</option>
+                }
+            </select>
             <input type="submit" value="Create">
         </form>
-
+        <hr>
+        <a href="@Url.Action("EditCategories") " class="btn btn-primary">Edit categories</a>
+        <hr>
         @foreach (var blog in Model.BlogList)
         {
             <article>
                 <h1>@blog.Title</h1>
                 <p>Published on April 4, 2024</p>
                 <p>@blog.Text</p>
+                <hr>
+                <p>Categorie: @blog.CategoryTitle</p>
                 <form action="DeleteBlog" method="post">
                     <input type="hidden" name="id" value="@blog.Id">
                     <button type="submit" class="btn btn-danger">Delete</button>

@@ -1,9 +1,13 @@
-﻿using DataLogicLayer;
+﻿using BusinessLogicLayer.Entitys;
+using DataLogicLayer;
 using DataLogicLayer.Entitys;
 using MySql.Data.MySqlClient;
+using Mysqlx.Crud;
+using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +24,7 @@ namespace BusinessLogicLayer
         {
             List<Blog> blogs = new List<Blog>();
 
-            string query = "SELECT `id`, `title`, `text` FROM `blog` ORDER BY `id` DESC";
+            string query = "SELECT b.id, b.title, b.text, c.title AS category_title FROM blog b JOIN blogcategorie bc ON b.id = bc.blog_id JOIN categorie c ON bc.categorie_id = c.id ORDER BY b.id DESC";
 
             if (connection.OpenConnection())
             {
@@ -33,6 +37,7 @@ namespace BusinessLogicLayer
                     blog.Id = Convert.ToInt32(dataReader["id"]);
                     blog.Title = dataReader["title"].ToString();
                     blog.Text = dataReader["text"].ToString();
+                    blog.CategoryTitle = dataReader["category_title"].ToString();
 
                     blogs.Add(blog);
                 }
@@ -47,34 +52,50 @@ namespace BusinessLogicLayer
 
 
         //Create New Blog
-        public void CreateBlog(Blog blog)
+        public void CreateBlog(Blog blog, int categoryId)
         {
-            string query = "INSERT INTO blog (Title, Text) VALUES (@Title, @Text)";
+            int blogId;
+            string queryBlog = "INSERT INTO blog (Title, Text) VALUES (@Title, @Text); SELECT LAST_INSERT_ID();";
+
+            string queryConnectBlogCat = "INSERT INTO blogcategorie (blog_id, categorie_id) VALUES (@BlogID, @CategoryID);";
             using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
             {
                 connection.Open();
-                using (var cmd = new MySqlCommand(query, connection))
+                using (var cmd = new MySqlCommand(queryBlog, connection))
                 {
                     cmd.Parameters.AddWithValue("@Title", blog.Title);
                     cmd.Parameters.AddWithValue("@Text", blog.Text);
+                    blogId = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+
+                using (var cmd = new MySqlCommand(queryConnectBlogCat, connection))
+                {
+                    cmd.Parameters.AddWithValue("@BlogID", blogId);
+                    cmd.Parameters.AddWithValue("@CategoryID", categoryId);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
 
-        //Delete blog
-        public void DeleteBlogs(int id)
-        {
-            DatabaseConnection databaseConnection = new DatabaseConnection();
 
-            string query = "DELETE FROM blog WHERE Id = @Id";
+        //Delete blog
+        public void DeleteBlogs(int blogId)
+        {
+            string queryDeleteBlogCategorie = "DELETE FROM blogcategorie WHERE blog_id = @BlogID;";
+            string queryDeleteBlog = "DELETE FROM blog WHERE id = @BlogID;";
+
             using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
             {
                 connection.Open();
-                using (var cmd = new MySqlCommand(query, connection))
+                using (var cmd = new MySqlCommand(queryDeleteBlogCategorie, connection))
                 {
-                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.Parameters.AddWithValue("@BlogID", blogId);
+                    cmd.ExecuteNonQuery();
+                }
+                using (var cmd = new MySqlCommand(queryDeleteBlog, connection))
+                {
+                    cmd.Parameters.AddWithValue("@BlogID", blogId);
                     cmd.ExecuteNonQuery();
                 }
             }

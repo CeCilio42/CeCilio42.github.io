@@ -36,6 +36,37 @@ namespace DataLogicLayer.DaL
             return categories;
         }
 
+        public void CreateCategory(Categorie categorie)
+        {
+            string queryCreateCategory = "INSERT INTO categorie (Title) VALUES (@Title);";
+
+            using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+            {
+                connection.Open();
+                using (var cmd = new MySqlCommand(queryCreateCategory, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Title", categorie.Title);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+        public void EditCategory(Categorie categorie)
+        {
+            string queryEditCategory = "UPDATE categorie SET Title = @Title WHERE Id = @Id;";
+
+            using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+            {
+                connection.Open();
+                using (var cmd = new MySqlCommand(queryEditCategory, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Title", categorie.Title);
+                    cmd.Parameters.AddWithValue("@Id", categorie.Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
 
     }

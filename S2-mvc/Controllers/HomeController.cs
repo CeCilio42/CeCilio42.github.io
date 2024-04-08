@@ -1,5 +1,6 @@
 using BusinessLogicLayer.Classes;
 using BusinessLogicLayer.Entitys;
+using DataAccessLayer;
 using DataLogicLayer;
 using DataLogicLayer.Entitys;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,7 @@ namespace S2_mvc.Controllers
     {
         DatabaseConnection connection = new DatabaseConnection();
         BlogService blogService = new BlogService();
+        CategorieService categorieService = new CategorieService();
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -23,7 +25,6 @@ namespace S2_mvc.Controllers
             _logger = logger;
 
         }
-
 
 
 
@@ -35,6 +36,11 @@ namespace S2_mvc.Controllers
 
             BlogViewModel blogViewModel = new BlogViewModel();
             blogViewModel.BlogList = blogs;
+
+
+            CategorieService categorieService = new CategorieService();
+            List<Categorie> options = categorieService.SetList();
+            blogViewModel.categories = options;
 
             return View(blogViewModel);
         }
@@ -54,9 +60,9 @@ namespace S2_mvc.Controllers
 
         //Create blog
         [HttpPost]
-        public IActionResult CreateBlog(Blog blog)
+        public IActionResult CreateBlog(Blog blog, int categoryID)
         {
-            blogService.CreateBlog(blog);
+            blogService.CreateBlog(blog, categoryID);
 
             return RedirectToAction("Blogs");
         }
@@ -86,6 +92,35 @@ namespace S2_mvc.Controllers
             blogService.EditBlog(blog);
             return RedirectToAction("EditBlog"); 
         }
+        
+
+        //Get categories to edit
+        public IActionResult EditCategories()
+        {
+            EditCategoriesViewModel editCategoriesViewModel = new EditCategoriesViewModel();
+            CategorieService categorieService = new CategorieService();
+
+            editCategoriesViewModel.categories = categorieService.SetList();
+
+            return View(editCategoriesViewModel);
+        }
+
+
+        public IActionResult CreateCategorie(Categorie categorie) 
+        {
+            categorieService.CreateCategorie(categorie);
+
+            return RedirectToAction("EditCategories");
+        }
+
+
+        public ActionResult updateCategorie(Categorie categorie)
+        {
+            categorieService.EditCategorie(categorie);
+            return RedirectToAction("EditCategories");
+        }
+
+
 
 
         public IActionResult Privacy()

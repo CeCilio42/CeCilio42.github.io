@@ -25,10 +25,10 @@ namespace BusinessLogicLayer.Classes
         }
         
         //Create Blog
-        public Blog CreateBlog(Blog blog)
+        public Blog CreateBlog(Blog blog, int categoryId)
         {
-            repository.CreateBlog(blog);
-
+            repository.CreateBlog(blog, categoryId);
+            
             return blog;
         }
 
@@ -38,14 +38,14 @@ namespace BusinessLogicLayer.Classes
             repository.DeleteBlogs(blogId);  
         }
 
-
+        //Get selected blog for edit
         public Blog ShowSelectedBlogToEdit(int id)
         {
             return repository.GetSelectedBlogToEdit(id);
 
         }
 
-
+        //Edit blog and save
         public void EditBlog(Blog blog)
         {
             repository.EditBlog(blog);

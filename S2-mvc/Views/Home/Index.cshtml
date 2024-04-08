@@ -1,47 +1,87 @@
 ﻿@model CategorieViewModel
 
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My Cool App</title>
+    <title>Login Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
-            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
-            color: #333;
             font-size: 24px;
             margin-bottom: 10px;
         }
 
-        p {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.5;
+        form {
+            margin-bottom: 20px;
         }
 
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            margin-top: 20px;
+            margin-bottom: 10px;
         }
+
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+       
     </style>
 </head>
 <body>
-    <h1>Welcome to My Cool App</h1>
-    <p>Explore our awesome blogs and discover amazing content!</p>
+@*     <div class="container">
+        <h1>Login</h1>
+        <form action="Login" method="post">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div> *@
     <a href="@Url.Action("Blogs", "Home")" class="button">Start Reading</a>
 </body>
-
 
 

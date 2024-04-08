@@ -10,33 +10,25 @@ namespace BusinessLogicLayer.Classes
         //CategorieViewModel categorieModel = new CategorieViewModel();
 
         List<Categorie> categories = new List<Categorie>();
-        private CategorieRepository database = new CategorieRepository();
+        private CategorieRepository repository = new CategorieRepository();
 
         public List<Categorie> SetList()
         {
-            categories = database.SetList();
+            categories = repository.SetList();
 
-            CheckList(categories);
             return categories;
         }
 
-
-        private void CheckList(List<Categorie> categories)
+        public Categorie CreateCategorie(Categorie categorie)
         {
-            List<Categorie> itemsToRemove = new List<Categorie>();
-            foreach (Categorie categorie in categories)
-            {
-                if (categorie.Title.Length < 5)
-                {
-                    itemsToRemove.Add(categorie);
-                }
-            }
-
-            foreach (Categorie itemToRemove in itemsToRemove)
-            {
-                categories.Remove(itemToRemove);
-            }
+            repository.CreateCategory(categorie);
+            return categorie;
         }
+        
 
+        public void EditCategorie(Categorie categorie)
+        {
+            repository.EditCategory(categorie);
+        }
     }
 }

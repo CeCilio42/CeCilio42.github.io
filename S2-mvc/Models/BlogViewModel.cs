@@ -7,5 +7,7 @@ namespace S2_mvc.Models
     {
         public List<Blog>? BlogList { get; set; }
 
+        public List<Categorie>? categories { get; set; }
+
     }
 }
