@@ -8,8 +8,10 @@ namespace DataAccessLayer.Entitys
 {
     public class User
     {
+        public int Id { get; set; }
         public string User_Username { get; set; }
         public string User_Password { get; set;}
         
+        //public bool role { get; set; }
     }
 }

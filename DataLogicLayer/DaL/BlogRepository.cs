@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.Entitys;
+using DataAccessLayer.Entitys;
 using DataLogicLayer;
 using DataLogicLayer.Entitys;
 using MySql.Data.MySqlClient;
@@ -23,9 +24,8 @@ namespace BusinessLogicLayer
         public List<Blog> GetBlogs()
         {
             List<Blog> blogs = new List<Blog>();
-
-            string query = "SELECT b.id, b.title, b.text, c.title AS category_title FROM blog b JOIN blogcategorie bc ON b.id = bc.blog_id JOIN categorie c ON bc.categorie_id = c.id ORDER BY b.id DESC";
-
+            
+            string query = "SELECT b.id, b.title, b.text, c.title AS categorie_title\r\nFROM blog b\r\nLEFT JOIN blogcategorie bc ON b.id = bc.blog_id\r\nLEFT JOIN categorie c ON bc.categorie_id = c.id\r\nORDER BY b.id DESC;";
             if (connection.OpenConnection())
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection.connection);
@@ -37,7 +37,14 @@ namespace BusinessLogicLayer
                     blog.Id = Convert.ToInt32(dataReader["id"]);
                     blog.Title = dataReader["title"].ToString();
                     blog.Text = dataReader["text"].ToString();
-                    blog.CategoryTitle = dataReader["category_title"].ToString();
+                    blog.CategoryTitle = dataReader["categorie_title"].ToString();
+
+
+                    //blog.user = new User
+                    //{
+                    //    Id = Convert.ToInt32(dataReader["user_id"]),
+                    //    User_Username = dataReader["username"].ToString()
+                    //};
 
                     blogs.Add(blog);
                 }
@@ -148,5 +155,28 @@ namespace BusinessLogicLayer
                 }
             }
         }
+
+        private bool IsBlogUserCoupled(int blogId, int userId)
+        {
+            string query = "SELECT COUNT(1) FROM blog_user WHERE blog_id = @BlogId AND user_id = @UserId;";
+
+            using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+            {
+                connection.Open();
+                using (var cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@BlogId", blogId);
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    int result = Convert.ToInt32(cmd.ExecuteScalar());
+                    return result > 0;
+                }
+            }
+        }
+
+        public bool IsBlogOwnedByUser(int blogId, int userId)
+        {
+            return IsBlogUserCoupled(blogId, userId);
+        }
+
     }
 }

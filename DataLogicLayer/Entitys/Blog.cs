@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.Entitys;
+using DataAccessLayer.Entitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,12 @@ namespace DataLogicLayer.Entitys
         public string Title { get; set; }
         public string Text { get; set; }
 
-
+        public bool IsOwner { get; set; }
 
         public string CategoryTitle { get; set; }
+        public User user { get; set; }
+
+        
+
     }
 }

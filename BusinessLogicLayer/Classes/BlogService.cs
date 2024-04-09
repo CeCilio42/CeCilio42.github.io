@@ -50,5 +50,10 @@ namespace BusinessLogicLayer.Classes
         {
             repository.EditBlog(blog);
         }
+
+        public bool IsBlogOwnedByUser(int blogid, int userid)
+        {
+            return repository.IsBlogOwnedByUser(blogid, userid);
+        }
     }
 }
