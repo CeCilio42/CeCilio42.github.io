@@ -90,22 +90,6 @@
             <input type="submit" value="Create">
         </form>
         <hr>
-       @*  @foreach (var blog in Model.OwnerList)
-        {
-                <article>
-                    <h1>@blog.Title</h1>
-                    <p>Published on April 4, 2024</p>
-                    <p>@blog.Text</p>
-                    <hr>
-                    <p>Categorie: @blog.CategoryTitle</p>
-                    <form action="DeleteBlog" method="post">
-                        <input type="hidden" name="id" value="@blog.Id">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                        <a href="@Url.Action("EditBlog", new { id = blog.Id })" class="btn btn-primary">Edit</a>
-                    </form>
-                </article>
-            
-        } *@
 
         @foreach (var blog in Model.BlogList)
         {

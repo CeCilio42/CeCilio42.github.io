@@ -103,6 +103,8 @@ namespace S2_mvc.Controllers
             EditBlogViewModel editBlogViewModel = new EditBlogViewModel();
             editBlogViewModel.blog = blogService.ShowSelectedBlogToEdit(id);
 
+            editBlogViewModel.categories = categorieService.SetList();
+
             return View(editBlogViewModel);
         }
 

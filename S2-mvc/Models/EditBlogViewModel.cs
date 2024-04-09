@@ -1,4 +1,5 @@
-﻿using DataLogicLayer.Entitys;
+﻿using BusinessLogicLayer.Entitys;
+using DataLogicLayer.Entitys;
 
 namespace S2_mvc.Models
 {
@@ -6,5 +7,6 @@ namespace S2_mvc.Models
     {
         public Blog blog { get; set; }
 
+        public List<Categorie> categories { get; set; }
     }
 }

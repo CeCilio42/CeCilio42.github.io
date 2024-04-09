@@ -142,13 +142,13 @@ namespace BusinessLogicLayer
 
         public void EditBlog(Blog blog)
         {
-            string query = "UPDATE blog SET Title = @Title, Text = @Text WHERE Id = @Id";
+            string query = "UPDATE blog SET Title = @Title, Text = @Text WHERE Id = @BlogId;";
             using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
             {
                 connection.Open();
                 using (var cmd = new MySqlCommand(query, connection))
                 {
-                    cmd.Parameters.AddWithValue("@Id", blog.Id);
+                    cmd.Parameters.AddWithValue("@BlogId", blog.Id);
                     cmd.Parameters.AddWithValue("@Title", blog.Title);
                     cmd.Parameters.AddWithValue("@Text", blog.Text);
                     cmd.ExecuteNonQuery();

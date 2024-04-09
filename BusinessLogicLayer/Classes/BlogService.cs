@@ -1,4 +1,5 @@
-﻿using DataLogicLayer.DaL;
+﻿using BusinessLogicLayer.Entitys;
+using DataLogicLayer.DaL;
 using DataLogicLayer.Entitys;
 using System;
 using System.Collections.Generic;
