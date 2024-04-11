@@ -59,7 +59,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             margin-bottom: 10px;
-            resize: vertical; 
+            resize: vertical;
         }
 
         .form-group {
@@ -75,27 +75,29 @@
     <div class="container">
         <form asp-action="CreateCategorie" method="post">
             <div class="form-group">
-                <label for="Title">Category Title:</label>
-                <input type="text" id="Title" name="Title" class="form-control" placeholder="Enter category title">
+                <label for="CategoryTitle">Category Title:</label>
+                <input type="text" name="Name" class="form-control" placeholder="Enter category title">
             </div>
             <button type="submit" class="btn btn-primary">Create Category</button>
         </form>
         <p>  </p>
         <div class="mt-3">
-            @Html.ActionLink("Back to blogs", "Blogs", null, new { @class = "btn btn-secondary" })
+            @Html.ActionLink("Back to blogs", "Blogs", "Home", new { @class = "btn btn-secondary" })
         </div>
         <hr>
-        
+
         @foreach (var categorie in Model.categories)
         {
-            <form asp-action="updateCategorie" method="post">
+            <form action="updateCategorie" method="post">
                 <input type="hidden" asp-for="@categorie.Id" />
                 <div class="form-group">
-                    <label asp-for="@categorie.Title">Category Title:</label>
-                    <textarea asp-for="@categorie.Title" class="form-control"></textarea>
+                    <label>Category Title:</label>
+                    <textarea asp-for="@categorie.Title" name="Title" class="form-control"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
+
+
             <hr />
         }
         <P>  </P>

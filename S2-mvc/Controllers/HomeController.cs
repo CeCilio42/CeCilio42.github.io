@@ -1,41 +1,35 @@
+using BusinessLogicLayer;
 using BusinessLogicLayer.Classes;
+using BusinessLogicLayer.DTO_s;
+using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Entitys;
-using DataAccessLayer;
-using DataAccessLayer.DaL;
-using DataAccessLayer.Entitys;
-using DataLogicLayer;
+using BusinessLogicLayer.Interfaces;
+using DataLogicLayer.DaL;
 using DataLogicLayer.Entitys;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
 using S2_mvc.Models;
 using System.Configuration;
 using System.Diagnostics;
 using System.Reflection.Metadata;
 
-
 namespace S2_mvc.Controllers
 {
     public class HomeController : Controller
     {
-        DatabaseConnection connection = new DatabaseConnection();
-        BlogService blogService = new BlogService();
-        CategorieService categorieService = new CategorieService();
-        LoginService loginService;
-        private readonly ILogger<HomeController> _logger;
+        IBlogRepository repository = new BlogRepository();
+       
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-
-        }
-
+        ICategoryRepository categorieRepository = new CategorieRepository();
+        
 
 
         //Get Blogs admin page
-        public IActionResult Blogs(Blog blog)
+        public IActionResult Blogs()
         {
+            CategorieService categorieService = new CategorieService(categorieRepository);
+            BlogService blogService = new BlogService(repository);
             List<Blog> blogs = blogService.GetBlogs();
-            
+
             BlogViewModel blogViewModel = new BlogViewModel();
             blogViewModel.BlogList = blogs;
 
@@ -43,14 +37,19 @@ namespace S2_mvc.Controllers
             blogViewModel.categories = options;
 
 
+            
+
             return View(blogViewModel);
         }
 
 
-        //Get blogs 
-        public IActionResult UserBlogs(Blog blog, int userId)
+        //Get blogs
+        public IActionResult UserBlogs(BlogDTO blogDto, int userId)
         {
-          
+            CategorieService categorieService = new CategorieService(categorieRepository);
+            Blog blog = new Blog(blogDto);
+
+            BlogService blogService = new BlogService(repository);
             List<Blog> blogs = blogService.GetBlogs();
             BlogViewModel blogViewModel = new BlogViewModel();
             blogViewModel.BlogList = blogs;
@@ -58,7 +57,6 @@ namespace S2_mvc.Controllers
             blogViewModel.OwnerList = new List<Blog>();
 
 
-            CategorieService categorieService = new CategorieService();
             List<Categorie> options = categorieService.SetList();
             blogViewModel.categories = options;
 
@@ -69,11 +67,9 @@ namespace S2_mvc.Controllers
         //Get index page
         public IActionResult Index()
         {
-            CategorieService categorieBusinessLogic = new CategorieService();
-            List<Categorie> categories = categorieBusinessLogic.SetList();
+            CategorieService categorieService = new CategorieService(categorieRepository);
 
             CategorieViewModel categorieViewModel = new CategorieViewModel();
-            categorieViewModel.Categories = categories;
 
             return View(categorieViewModel);
         }
@@ -81,9 +77,11 @@ namespace S2_mvc.Controllers
 
         //Create blog
         [HttpPost]
-        public IActionResult CreateBlog(Blog blog, int categoryID)
+        public IActionResult CreateBlog(BlogDTO blogDto, int id)
         {
-            blogService.CreateBlog(blog, categoryID);
+            BlogService blogService = new BlogService(repository);
+
+            blogService.CreateBlog(blogDto, id);
 
             return RedirectToAction("Blogs");
         }
@@ -92,6 +90,7 @@ namespace S2_mvc.Controllers
         [HttpPost]
         public IActionResult DeleteBlog(int id)
         {
+            BlogService blogService = new BlogService(repository);
             blogService.DeleteBlog(id);
 
             return RedirectToAction("Blogs");
@@ -100,8 +99,12 @@ namespace S2_mvc.Controllers
         //Get selected blog for edit
         public IActionResult EditBlog(int id)
         {
+            CategorieService categorieService = new CategorieService(categorieRepository);
+            BlogService blogService = new BlogService(repository);
+
             EditBlogViewModel editBlogViewModel = new EditBlogViewModel();
-            editBlogViewModel.blog = blogService.ShowSelectedBlogToEdit(id);
+
+            editBlogViewModel.blog = blogService.GetBlogById(id);
 
             editBlogViewModel.categories = categorieService.SetList();
 
@@ -109,71 +112,23 @@ namespace S2_mvc.Controllers
         }
 
         //Save edits on selected blog
-        public IActionResult SaveEditBlog(Blog blog)
+        public IActionResult SaveEditBlog(BlogDTO blogDto)
         {
+            BlogService blogService = new BlogService(repository);
 
-            blogService.EditBlog(blog);
-            return RedirectToAction("EditBlog"); 
+            blogService.EditBlog(blogDto);
+            return RedirectToAction("EditBlog");
         }
 
 
         [HttpPost]
-        public IActionResult CreateBlogUser(Blog blog, int categoryID)
+        public IActionResult CreateBlogUser(BlogDTO blogDto, int id)
         {
-            blogService.CreateBlog(blog, categoryID);
-
+            BlogService blogService = new BlogService(repository);
+            blogService.CreateBlog(blogDto, id);
             return RedirectToAction("UserBlogs");
         }
 
-        //Get categories to edit
-        public IActionResult EditCategories()
-        {
-            EditCategoriesViewModel editCategoriesViewModel = new EditCategoriesViewModel();
-            CategorieService categorieService = new CategorieService();
-
-            editCategoriesViewModel.categories = categorieService.SetList();
-
-            return View(editCategoriesViewModel);
-        }
-
-        //Create category
-        public IActionResult CreateCategorie(Categorie categorie) 
-        {
-            categorieService.CreateCategorie(categorie);
-
-            return RedirectToAction("EditCategories");
-        }
-
-        //Save edit category
-        public ActionResult updateCategorie(Categorie categorie)
-        {
-            categorieService.EditCategorie(categorie);
-            return RedirectToAction("EditCategories");
-        }
-
-
-
-        //Login
-        public IActionResult Login(string username, string password, int id)
-        {
-            LoginRepository loginRepository = new LoginRepository();
-            var (loginSuccessful, userId) = loginRepository.Login(username, password, id);
-
-            bool admin = loginRepository.CheckRole(username, password);
-            if (loginSuccessful && admin) 
-            {
-                return RedirectToAction("Blogs");
-            }
-            else if (loginSuccessful)
-            {
-                return RedirectToAction("UserBlogs");
-            }
-            else 
-            {
-               return RedirectToAction("index");
-            }
-            
-        }
 
         public IActionResult Privacy()
         {
@@ -187,5 +142,5 @@ namespace S2_mvc.Controllers
         }
     }
 
-  
+
 }

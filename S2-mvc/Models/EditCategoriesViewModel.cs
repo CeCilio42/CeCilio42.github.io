@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.Entitys;
+﻿using BusinessLogicLayer.DTOs;
+using BusinessLogicLayer.Entitys;
 
 namespace S2_mvc.Models
 {

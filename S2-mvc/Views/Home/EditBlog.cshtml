@@ -62,10 +62,10 @@
         <form asp-action="SaveEditBlog" method="post">
             <input type="hidden" name="Id" value="@Model.blog.Id">
             <label for="Title">Title:</label>
-            <input type="text" id="Title" name="Title" value="@Model.blog.Title">
+            <input type="text" id="Name" name="Name" value="@Model.blog.Title">
             <br>
             <label for="Text">Text:</label>
-            <textarea id="Text" name="Text">@Model.blog.Text</textarea>
+            <textarea id="Text" name="Description">@Model.blog.Text</textarea>
             <br>
             <button type="submit">Save Changes</button>
         </form>

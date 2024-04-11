@@ -46,9 +46,9 @@
             width: 100%;
         }
 
-        button:hover {
-            opacity: 0.8;
-        }
+            button:hover {
+                opacity: 0.8;
+            }
 
         .imgcontainer {
             text-align: center;
@@ -69,13 +69,12 @@
             padding-top: 16px;
         }
 
-       
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Login</h1>
-        <form asp-action="Login" method="post">
+        <form action="/Login/Login" method="post">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
