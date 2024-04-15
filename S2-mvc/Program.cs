@@ -1,9 +1,32 @@
+using BusinessLogicLayer;
+using BusinessLogicLayer.Classes;
+using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Interfaces_Services;
+using DataAccessLayer.DaL;
+using DataLogicLayer.DaL;
+using NuGet.Protocol.Core.Types;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddScoped<IBlogService, BlogService>();
+
+builder.Services.AddScoped<ICategoryRepository, CategorieRepository>();
+builder.Services.AddScoped<ICategorieService, CategorieService>();
+
+builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+builder.Services.AddScoped<ILoginService, LoginService>();
+
+
 var app = builder.Build();
+
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

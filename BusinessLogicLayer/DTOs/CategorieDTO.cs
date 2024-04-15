@@ -9,11 +9,7 @@ namespace BusinessLogicLayer.DTOs
 {
     public class CategorieDTO
     {
-        public CategorieDTO() 
-        {
-
-        }
-
+        public CategorieDTO() { }
         public CategorieDTO(Categorie categorie) 
         {
             Id = categorie.Id;

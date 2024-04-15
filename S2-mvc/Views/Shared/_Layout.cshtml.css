@@ -8,7 +8,7 @@ a.navbar-brand {
 }
 
 a {
-  color: #0077cc;
+  color: #3D3D3D;
 }
 
 .btn-primary {
@@ -16,6 +16,7 @@ a {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;

@@ -13,8 +13,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BusinessLogicLayer
 {
@@ -38,6 +40,52 @@ namespace BusinessLogicLayer
                 if (connection.OpenConnection())
                 {
                     MySqlCommand cmd = new MySqlCommand(query, connection.connection);
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        BlogDTO blogDTO = new BlogDTO();
+                        blogDTO.id = Convert.ToInt32(dataReader["id"]);
+                        blogDTO.Name = dataReader["title"].ToString();
+                        blogDTO.Description = dataReader["text"].ToString();
+                        blogDTO.CategoryTitle = dataReader["categorie_title"].ToString();
+
+                        blogs.Add(blogDTO);
+                    }
+
+                    dataReader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+            finally
+            {
+                connection.CloseConnection();
+            }
+
+            return blogs;
+        }
+
+
+        public List<BlogDTO> SearchBlogsByInput(string input)
+        {
+            List<BlogDTO> blogs = new List<BlogDTO>();
+            string query = "SELECT b.id, b.title, b.text, c.title " +
+                "AS categorie_title FROM blog b " +
+                "LEFT JOIN blogcategorie bc ON b.id = bc.blog_id " +
+                "LEFT JOIN categorie c ON bc.categorie_id = c.id " +
+                "WHERE b.title " +
+                "LIKE @input OR b.text LIKE @input " +
+                "ORDER BY b.id DESC";
+            ;
+            try
+            {
+                if (connection.OpenConnection())
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection.connection);
+                    cmd.Parameters.AddWithValue("@input", "%" + input + "%");
                     MySqlDataReader dataReader = cmd.ExecuteReader();
 
                     while (dataReader.Read())

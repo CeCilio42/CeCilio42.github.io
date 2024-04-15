@@ -5,10 +5,11 @@ using BusinessLogicLayer.Interfaces;
 using DataLogicLayer.Entitys;
 using BusinessLogicLayer.Entitys;
 using System.Net.Http.Headers;
+using BusinessLogicLayer.Interfaces_Services;
 
 namespace BusinessLogicLayer.Classes
 {
-    public class CategorieService
+    public class CategorieService : ICategorieService
     {
 
         List<Categorie> categories = new List<Categorie>();
@@ -29,21 +30,21 @@ namespace BusinessLogicLayer.Classes
         }
 
 
-        public CategorieDTO CreateCategorie(CategorieDTO categorieDTO)
+        public Categorie CreateCategorie(Categorie categorie)
         {
+            CategorieDTO categorieDto = new CategorieDTO(categorie);
+            repository.CreateCategory(categorieDto);
 
-            repository.CreateCategory(categorieDTO);
-
-            return categorieDTO;
+            return categorie;
         }
 
 
 
 
-        public void EditCategorie(CategorieDTO categorieDto)
+        public void EditCategorie(Categorie categorie)
         {
-            Categorie category = new Categorie(categorieDto);
-            repository.EditCategory(categorieDto);
+            CategorieDTO categoryDto = new CategorieDTO(categorie);
+            repository.EditCategory(categoryDto);
         }
 
     }

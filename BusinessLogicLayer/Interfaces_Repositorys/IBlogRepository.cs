@@ -15,6 +15,7 @@ namespace BusinessLogicLayer.Interfaces
             BlogDTO GetBlogById(int id);
             void DeleteBlogs(int id);
             void EditBlog(BlogDTO blogDto);
+            List<BlogDTO> SearchBlogsByInput(string input);
 
 
     }

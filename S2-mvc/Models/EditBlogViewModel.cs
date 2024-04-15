@@ -10,5 +10,8 @@ namespace S2_mvc.Models
         public Blog blog { get; set; }
 
         public List<Categorie> categories { get; set; }
+
+        public List<Blog> comments { get; set; }
+
     }
 }

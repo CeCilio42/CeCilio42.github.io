@@ -10,30 +10,50 @@
     <title>Edit Blog Post</title>
     <style>
         body {
+            color: white;
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #717171;
+        }
+
+        .search-form {
+            display: inline-block;
+        }
+
+        .search-input {
+            width: 0 auto;
+            font-size: 14px;
+        }
+
+        .search-form button {
+            padding: 0.25rem 0.5rem;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #3D3D3D;
             border-radius: 5px;
-            
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+
 
         h1 {
             font-size: 24px;
             margin-bottom: 10px;
         }
 
-        label {
-            font-weight: bold;
+        p {
+            font-size: 16px;
+            line-height: 1.5;
         }
 
-        input[type="text"],
-        textarea {
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -41,7 +61,7 @@
             margin-bottom: 10px;
         }
 
-        button[type="submit"] {
+        input[type="submit"] {
             background-color: #007bff;
             color: #ffffff;
             border: none;
@@ -50,9 +70,111 @@
             cursor: pointer;
         }
 
-        a {
-            color: #007bff;
-            text-decoration: none;
+        article {
+            border: 2px solid #black;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #717171;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #3D3D3D;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header */
+        .post-header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .post-header .author,
+        .post-header .date {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        /* Post Content */
+        .post-content {
+            background-color: #717171;
+            margin-bottom: 20px;
+        }
+
+        /* Comments */
+        .comments {
+            margin-top: 40px;
+        }
+
+            .comments h2 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+        .comment {
+            background-color: #3D3D3D;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ccc;
+        }
+
+        .comment-author {
+            font-weight: bold;
+        }
+
+        .comment-text {
+            margin-top: 5px;
+        }
+
+        /* Post Footer */
+        .post-footer {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-danger {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .btn-outline-info {
+            background-color: transparent;
+            color: #5bc0de;
+            border: 1px solid #5bc0de;
+        }
+
+        .btn:not(:last-child) {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -60,14 +182,14 @@
     <div class="container">
         <h1>Edit Blog Post</h1>
         <form asp-action="SaveEditBlog" method="post">
-            <input type="hidden" name="Id" value="@Model.blog.Id">
-            <label for="Title">Title:</label>
-            <input type="text" id="Name" name="Name" value="@Model.blog.Title">
+            <input type="hidden" asp-for="blog.Id">
+            <label asp-for="blog.Title">Title:</label>
+            <input asp-for="blog.Title" class="form-control">
             <br>
-            <label for="Text">Text:</label>
-            <textarea id="Text" name="Description">@Model.blog.Text</textarea>
+            <label asp-for="blog.Text">Text:</label>
+            <textarea asp-for="blog.Text" class="form-control"></textarea>
             <br>
-            <button type="submit">Save Changes</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
         <div>
             @Html.ActionLink("Back to List", "Blogs", null, new { @class = "button" })

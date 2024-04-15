@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Interfaces_Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Classes
 {
-    public class LoginService
+    public class LoginService : ILoginService
     {
         private readonly ILoginRepository loginRepository;
 

@@ -10,25 +10,47 @@
     <title>Edit Category</title>
     <style>
         body {
+            color: white;
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #717171;
+        }
+
+        .search-form {
+            display: inline-block;
+        }
+
+        .search-input {
+            width: 0 auto;
+            font-size: 14px;
+        }
+
+        .search-form button {
+            padding: 0.25rem 0.5rem;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #3D3D3D;
             border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+
 
         h1 {
             font-size: 24px;
             margin-bottom: 10px;
         }
 
-        label {
-            font-weight: bold;
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        form {
+            margin-bottom: 20px;
         }
 
         input[type="text"] {
@@ -39,7 +61,7 @@
             margin-bottom: 10px;
         }
 
-        button[type="submit"] {
+        input[type="submit"] {
             background-color: #007bff;
             color: #ffffff;
             border: none;
@@ -48,26 +70,111 @@
             cursor: pointer;
         }
 
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
+        article {
+            border: 2px solid #black;
+            padding: 20px;
+            margin-bottom: 20px;
             border-radius: 5px;
+            background-color: #717171;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #3D3D3D;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header */
+        .post-header h1 {
+            font-size: 24px;
             margin-bottom: 10px;
-            resize: vertical;
         }
 
-        .form-group {
-            margin-bottom: 15px;
+        .post-header .author,
+        .post-header .date {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 5px;
         }
 
-        .btn-secondary {
-            background-color: #6c757d;
+        /* Post Content */
+        .post-content {
+            background-color: #717171;
+            margin-bottom: 20px;
+        }
+
+        /* Comments */
+        .comments {
+            margin-top: 40px;
+        }
+
+            .comments h2 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+        .comment {
+            background-color: #3D3D3D;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ccc;
+        }
+
+        .comment-author {
+            font-weight: bold;
+        }
+
+        .comment-text {
+            margin-top: 5px;
+        }
+
+        /* Post Footer */
+        .post-footer {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-danger {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .btn-outline-info {
+            background-color: transparent;
+            color: #5bc0de;
+            border: 1px solid #5bc0de;
+        }
+
+        .btn:not(:last-child) {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -76,7 +183,7 @@
         <form asp-action="CreateCategorie" method="post">
             <div class="form-group">
                 <label for="CategoryTitle">Category Title:</label>
-                <input type="text" name="Name" class="form-control" placeholder="Enter category title">
+                <input type="text" name="Title" class="form-control" placeholder="Enter category title">
             </div>
             <button type="submit" class="btn btn-primary">Create Category</button>
         </form>
@@ -92,10 +199,11 @@
                 <input type="hidden" asp-for="@categorie.Id" />
                 <div class="form-group">
                     <label>Category Title:</label>
-                    <textarea asp-for="@categorie.Title" name="Title" class="form-control"></textarea>
+                    <textarea asp-for="@categorie.Title" class="form-control"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
+
 
 
             <hr />

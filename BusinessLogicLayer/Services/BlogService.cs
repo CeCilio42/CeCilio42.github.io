@@ -2,6 +2,7 @@
 using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
 using DataLogicLayer.Entitys;
+using BusinessLogicLayer.Interfaces_Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Classes
 {
-    public class BlogService
+    public class BlogService : IBlogService
     {
         List<BlogDTO> blogs = new List<BlogDTO>();
 
@@ -24,19 +25,43 @@ namespace BusinessLogicLayer.Classes
 
         //Get All BlogsDTOs
         public List<Blog> GetBlogs()
-        {
-            var blogDtos = repository.GetBlogs();
-            var blogs = blogDtos.Select(dto => new Blog(dto)).ToList();
+        {   
+            List<BlogDTO> blogDtos = repository.GetBlogs();
+            List<Blog> blogs = blogDtos.Select(dto => new Blog(dto)).ToList();
             return blogs;
         }
 
         //Create Blog
-        public BlogDTO CreateBlog(BlogDTO blogDTO, int id)
+        public BlogDTO CreateBlog(Blog blog, int id)
         {
-            repository.CreateBlog(blogDTO, id);
+            if (blog.Title.Length <= 10)
+            {
+                throw new ArgumentException("Title must be shorter than 50 characters");
+            }
+            else if(blog.Text.Length <= 5)
+            {
+                throw new ArgumentException("Blog must be shorter than 280 characters");
 
-            return blogDTO;
+            }
+            else
+            {
+                BlogDTO blogDto = new BlogDTO(blog);
+                repository.CreateBlog(blogDto, id);
+
+                return blogDto;
+            }
+
         }
+
+
+        public List<Blog> SearchBlogsByInput(string input)
+        {
+            List<BlogDTO> blogDtos = repository.SearchBlogsByInput(input);
+            List<Blog> blogs = blogDtos.Select(dto =>new Blog(dto)).ToList();
+            return blogs;
+            
+        }
+
 
         //Delete Blog
         public void DeleteBlog(int blogId)
@@ -54,8 +79,9 @@ namespace BusinessLogicLayer.Classes
 
 
         //Edit blog and save
-        public void EditBlog(BlogDTO blogDto)
+        public void EditBlog(Blog blog)
         {
+            BlogDTO blogDto = new BlogDTO(blog);
             repository.EditBlog(blogDto);
         }
 

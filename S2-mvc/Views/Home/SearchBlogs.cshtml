@@ -16,16 +16,16 @@
         }
 
         .search-form {
-            display: inline-block; 
+            display: inline-block;
         }
 
         .search-input {
-            width: 0 auto; 
-            font-size: 14px; 
+            width: 0 auto;
+            font-size: 14px;
         }
 
         .search-form button {
-            padding: 0.25rem 0.5rem; 
+            padding: 0.25rem 0.5rem;
         }
 
         .container {
@@ -95,7 +95,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .post-container{
+        .post-container {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
@@ -182,13 +182,15 @@
     <div class="container">
 
         <div class="row">
-                <h1>
-                    <form class="search-form d-inline" action="SearchBlogs" method="post">
-                        <input type="text" name="input" placeholder="Search Blogs" aria-label="Search" class="search-input">
-                        <button type="submit" class="btn btn-outline-primary btn-sm">Search</button>
-                    </form>
-
-                </h1>
+            <h1>
+                <form class="search-form d-inline" action="SearchBlogs" method="post">
+                    <input type="text" name="input" placeholder="Search Blogs" aria-label="Search" class="search-input">
+                    <button type="submit" class="btn btn-outline-primary btn-sm">Search</button>
+                </form>
+                <form class="search-form d-inline" action="Blogs" method="post">
+                    <button type="submit" class="btn btn-outline-success">Reset</button>
+                </form>
+            </h1>
         </div>
         <hr>
 
@@ -208,15 +210,15 @@
         <hr>
         <a href="@Url.Action("EditCategories", "Categorie") " class="btn btn-primary">Edit categories</a>
         <hr>
-        @foreach (var blog in Model.BlogList)
+        @foreach (var blog in Model.SearchList)
         {
-            
+
             <article>
                 <h1>@blog.Title</h1>
                 <hr>
                 <p>@blog.Text</p>
                 <hr>
-                @if(blog.CategoryTitle.Length >= 1)
+                @if (blog.CategoryTitle.Length >= 1)
                 {
                     <p>Categorie: @blog.CategoryTitle</p>
                 }
@@ -226,7 +228,7 @@
                     <input type="hidden" name="Id" value="@blog.Id">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
-                
+
             </article>
         }
     </div>

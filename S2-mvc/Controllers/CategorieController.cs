@@ -2,7 +2,7 @@
 using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Entitys;
 using BusinessLogicLayer.Interfaces;
-using DataLogicLayer.DaL;
+using BusinessLogicLayer.Interfaces_Services;
 using Microsoft.AspNetCore.Mvc;
 using S2_mvc.Models;
 
@@ -10,13 +10,19 @@ namespace S2_mvc.Controllers
 {
     public class CategorieController : Controller
     {
-        ICategoryRepository repository = new CategorieRepository();
-        
+
+
+        private readonly ICategorieService categorieService;
+
+        public CategorieController(ICategorieService _categorieService)
+        {
+            categorieService = _categorieService;
+        }
 
         //Get categories to edit
         public IActionResult EditCategories()
         {
-            CategorieService categorieService = new CategorieService(repository);
+
 
             EditCategoriesViewModel editCategoriesViewModel = new EditCategoriesViewModel();
 
@@ -26,11 +32,12 @@ namespace S2_mvc.Controllers
         }
 
         //Create category
-        public IActionResult CreateCategorie(CategorieDTO categorieDto)
+        public IActionResult CreateCategorie(Categorie categorie)
         {
-            CategorieService categorieService = new CategorieService(repository);
 
-            categorieService.CreateCategorie(categorieDto);
+            
+
+            categorieService.CreateCategorie(categorie);
 
             return RedirectToAction("EditCategories");
         }
@@ -38,10 +45,9 @@ namespace S2_mvc.Controllers
         //Save edit category
         public IActionResult updateCategorie(Categorie categorie)
         {
-            CategorieService categorieService = new CategorieService(repository);
 
-            CategorieDTO categorieDto = new CategorieDTO(categorie);
-            categorieService.EditCategorie(categorieDto);
+
+            categorieService.EditCategorie(categorie);
             return RedirectToAction("EditCategories");
         }
 
