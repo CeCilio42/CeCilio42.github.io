@@ -2,6 +2,12 @@
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Interfaces_Services;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI;
+
+using Microsoft.AspNetCore.Http; 
+using Microsoft.AspNetCore.Session; 
+
+
 
 namespace S2_mvc.Controllers
 {
@@ -16,26 +22,35 @@ namespace S2_mvc.Controllers
         }
 
         //Login
-        public IActionResult Login(string username, string password, int id)
+        public IActionResult Login(string username, string password)
         {
-            var (loginSuccessful, userId) = loginService.Login(username, password, id);
+            var (loginSuccessful, userId) = loginService.Login(username, password);
 
-            bool admin = loginService.CheckRole(username, password);
-            if (loginSuccessful && admin)
+            if (loginSuccessful)
             {
-                return RedirectToAction("Blogs", "Home");
-            }
-            else if (loginSuccessful)
-            {
-                return RedirectToAction("UserBlogs", "Home");
+                HttpContext.Session.SetInt32("User_ID", userId);
+
+                bool admin = loginService.CheckRole(username, password);
+                if (admin)
+                {
+                    return RedirectToAction("Blogs", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("UserBlogs", "Home");
+                }
             }
             else
             {
                 return RedirectToAction("Index", "Home");
             }
-
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
 
         public IActionResult Index()
         {

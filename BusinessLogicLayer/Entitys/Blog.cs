@@ -18,16 +18,16 @@ namespace DataLogicLayer.Entitys
             Title = blogDto.Name;
             Text = blogDto.Description;
             CategoryTitle = blogDto.CategoryTitle;
+            Date = blogDto.Date;
+            Username = blogDto.Username;
         }
 
-        // Properties with private setters
         public int Id { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
         public string CategoryTitle { get; set; }
-        public User user { get; set; }
-
-        
+        public string Username { get; set; }        
+        public string Date {  get; set; }
 
     }
 }

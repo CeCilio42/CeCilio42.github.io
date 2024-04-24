@@ -1,5 +1,6 @@
 ﻿using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entitys;
+using DataLogicLayer.Entitys;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace DataAccessLayer.DaL
 {
     public class LoginRepository : ILoginRepository
     {
-        public (bool, int) Login(string username, string password, int id)
+        public (bool, int) Login(string username, string password)
         {
             string queryLogin = "SELECT id FROM users WHERE username = @Username AND password = @Password;";
             try
@@ -87,8 +88,6 @@ namespace DataAccessLayer.DaL
                 return false;
             }
         }
-
-
 
     }
 }

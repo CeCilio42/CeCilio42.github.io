@@ -18,9 +18,9 @@ namespace BusinessLogicLayer.Classes
             this.loginRepository = loginRepository;
         }
 
-        public (bool, int) Login(string username, string password, int id)
+        public (bool, int) Login(string username, string password)
         {
-            return loginRepository.Login(username, password, id);
+            return loginRepository.Login(username, password);
         }
 
         public bool CheckRole(string username, string password)

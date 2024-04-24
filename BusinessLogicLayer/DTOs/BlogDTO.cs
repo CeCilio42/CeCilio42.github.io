@@ -1,4 +1,5 @@
-﻿using DataLogicLayer.Entitys;
+﻿using DataAccessLayer.Entitys;
+using DataLogicLayer.Entitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,16 @@ namespace BusinessLogicLayer.DTO_s
             Name = blog.Title;
             Description = blog.Text;
             CategoryTitle = blog.CategoryTitle;
+            Date = blog.Date;
+            Username = blog.Username;
         }
 
         public int id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string CategoryTitle { get; set; }
+        public string Username{ get; set; }
+
+        public string Date {  get; set; }
     }
 }

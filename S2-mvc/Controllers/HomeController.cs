@@ -5,6 +5,7 @@ using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Entitys;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Interfaces_Services;
+using DataAccessLayer.Entitys;
 using DataLogicLayer.Entitys;
 using Microsoft.AspNetCore.Mvc;
 using S2_mvc.Models;
@@ -32,7 +33,6 @@ namespace S2_mvc.Controllers
         public IActionResult Blogs()
         {
 
-
             List<Blog> blogs = blogService.GetBlogs();
 
             blogViewModel.BlogList = blogs;
@@ -57,11 +57,15 @@ namespace S2_mvc.Controllers
         }
 
         //Get blogs
-        public IActionResult UserBlogs()
-        {
-            List<Blog> blogs = blogService.GetBlogs();
+        public IActionResult UserBlogs(int? userId)
+        {   userId = HttpContext.Session.GetInt32("User_ID");
 
-            blogViewModel.BlogList = blogs;
+            List<Blog> OwnersList = blogService.GetUserBlogs(userId);
+
+            blogViewModel.OwnersList = OwnersList;
+            blogViewModel.BlogList = blogService.GetBlogs();
+
+            blogViewModel.BlogList.RemoveAll(blog => OwnersList.Any(ownerblog => ownerblog.Id == blog.Id));
 
 
             List<Categorie> options = categorieService.SetList();
@@ -75,7 +79,6 @@ namespace S2_mvc.Controllers
         //Get index page
         public IActionResult Index()
         {
-
             CategorieViewModel categorieViewModel = new CategorieViewModel();
 
             ViewData["ShowSidebar"] = false;
@@ -86,9 +89,10 @@ namespace S2_mvc.Controllers
 
         //Create blog
         [HttpPost]
-        public IActionResult CreateBlog(Blog blog, int id)
+        public IActionResult CreateBlog(Blog blog, int id, int? user_id)
         {
-            blogService.CreateBlog(blog, id);
+            user_id = HttpContext.Session.GetInt32("User_ID");
+            blogService.CreateBlog(blog, id, user_id);
 
             return RedirectToAction("Blogs");
         }
@@ -103,6 +107,15 @@ namespace S2_mvc.Controllers
             blogService.DeleteBlog(id);
 
             return RedirectToAction("Blogs");
+        }
+
+        //Delete blog
+        [HttpPost]
+        public IActionResult DeleteBlogUser(int id)
+        {
+            blogService.DeleteBlog(id);
+
+            return RedirectToAction("UserBlogs");
         }
 
         //Get selected blog for edit
@@ -121,14 +134,16 @@ namespace S2_mvc.Controllers
         public IActionResult SaveEditBlog(Blog blog)
         {
             blogService.EditBlog(blog);
-            return RedirectToAction("Blogs");
+            return RedirectToAction("UserBlogs");
         }
 
 
         [HttpPost]
-        public IActionResult CreateBlogUser(Blog blog, int id)
+        public IActionResult CreateBlogUser(Blog blog, int id, int? user_id)
         {
-            blogService.CreateBlog(blog, id);
+            user_id = HttpContext.Session.GetInt32("User_ID");
+
+            blogService.CreateBlog(blog, id, user_id);
             return RedirectToAction("UserBlogs");
         }
 

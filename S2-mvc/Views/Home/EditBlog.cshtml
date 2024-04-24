@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = null;
 }
 
 <head>
@@ -9,190 +10,419 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Blog Post</title>
     <style>
-        body {
-            color: white;
-            font-family: Arial, sans-serif;
-            background-color: #717171;
-        }
+        body{
+    margin: 0;
+    padding: 0; 
+    font-family: 'Abel', sans-serif;
+    background-color: #111;
+  }
 
-        .search-form {
-            display: inline-block;
-        }
+:root {
+    --sidebar-width: 250px;
+    --topnav-height: 150px;
+    --sidebarRight-width: 400px;
+    --topnav-width: 250px;
+  }
 
-        .search-input {
-            width: 0 auto;
-            font-size: 14px;
-        }
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0; /* Stay on the left */
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    border-right: 5px solid #6b6b6b; /* Right border */
+  }
+  
+  /* The sidebar links */
+  .sidebar a {
+    margin-top: 60px;
+    padding: 6px 8px 6px 25px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffffff;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidebar a:hover {
+    color: #f1f1f1;
+  }
 
-        .search-form button {
-            padding: 0.25rem 0.5rem;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #3D3D3D;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+  .sidebar a:active{
+    border-right: 7px solid rgb(0, 126, 199);
+  }
 
 
+  .sidebar-right {
+    width: var(--sidebarRight-width);
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    right: 0; /* Stay on the left */
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-left: 30px;
+    border-left: 5px solid #6b6b6b; /* Right border */
+  }
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
+  
 
-        p {
-            font-size: 16px;
-            line-height: 1.5;
-        }
 
-        form {
-            margin-bottom: 20px;
-        }
+/*----------------------------*/
 
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
 
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.topnav {
+    position: relative;
+    background-color: #111;
+    margin-left: var(--sidebar-width);
+    width: calc(100% - --sidebar-width - --sidebarRight-width);
+    height: var(--topnav-height);
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav p {
+    margin-top: 75px;
+    float: left;
+    margin-left: 30px;
+    text-align: center;
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffffff;
+  }
 
-        article {
-            border: 2px solid #black;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            background-color: #717171;
-        }
+  .topnav form {
+    width: 30%;
+    margin-top: 75px;
+    float: left;
+    margin-left: 30px;
+    text-align: center;
+    padding: 6px 8px 6px 200px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffffff;
+  }
 
-        .btn-danger {
-            background-color: #dc3545;
-        }
+  .topnav input[type="text"] {
+    height: 15px;
+    right: 0; /* Aligns the search bar to the right */
+    padding: 15px 15px;
+    margin: 8px 10px;
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    background-color: #3d3d3d; /* Light grey background */
+    color: #ffffff; /* Dark grey text */
+    font-size: 16px; /* Adjust as needed */
+  }
+  
+  /* Placeholder text color */
+  .topnav input[type="text"]::placeholder {
+    color: #ffffff;
+  }
+  
+  /* Search bar hover effect */
+  .topnav input[type="text"]:hover {
+    background-color: #505050; /* Slightly darker on hover */
+  }
 
-        .btn-primary {
-            background-color: #007bff;
-        }
+  /* Custom Submit Button */
+.submit-button {
+    padding: 12px 24px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #008d47; /* Green background */
+    color: #FFFFFF; /* White text */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #037d56; /* Darker green on hover */
+  }
+  
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #3D3D3D;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
+  
+  .topnav > * {
+    margin: 0; /* Remove default margins from children elements */
+  }
 
-        .post-container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #FFFFFF;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
+  /*----------------------------*/
+  /* Style page content */
+  .main-content {
+    color: #f1f1f1;
+    margin-left: var(--sidebar-width);
+    height: 100%;
+    width: calc(100% - --sidebar-width - --sidebarRight-width);
+    background-color: #111;
+    padding: 0px 40px;
+  }
 
-        /* Header */
-        .post-header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
 
-        .post-header .author,
-        .post-header .date {
-            font-size: 14px;
-            color: white;
-            margin-bottom: 5px;
-        }
+  .blog-post {
+    width: 60%;
+    border-radius: 8px;
+    background-color: #3D3D3D;
+    padding: 20px;
+    margin-top: 20px;
+  }
 
-        /* Post Content */
-        .post-content {
-            background-color: #717171;
-            margin-bottom: 20px;
-        }
+  .blog-post h2 {
+    margin: 0 0 10px 0;
+  }
 
-        /* Comments */
-        .comments {
-            margin-top: 40px;
-        }
+  .blog-post .date {
+    color: #777;
+    font-size: 0.9em;
+  }
 
-            .comments h2 {
-                font-size: 20px;
-                margin-bottom: 10px;
-            }
+  .blog-post .content {
+    margin-top: 20px;
+  }
 
-        .comment {
-            background-color: #3D3D3D;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-left: 3px solid #ccc;
-        }
+  .blog-post .comments {
 
-        .comment-author {
-            font-weight: bold;
-        }
+    border-radius: 4px;
+    background-color: #464646;
+    margin-top: 20px;
+    padding: 10px;
+  }
 
-        .comment-text {
-            margin-top: 5px;
-        }
+  .blog-post .comments h3 {
+    margin: 0 0 10px 0;
+  }
 
-        /* Post Footer */
-        .post-footer {
-            margin-top: 20px;
-            text-align: right;
-        }
+  .blog-post .category{
+    border-radius: 4px;
+    background-color: #464646;
+    margin-top: 20px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
 
-        .btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
+  }
 
-        .btn-danger {
-            background-color: #d9534f;
-            color: white;
-        }
+  /* Style for the Edit button */
+/* Custom Edit Button */
+.edit-button {
+    display: inline-block;
+    width: 30px;
+    padding: 6px 25px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #5C5C5C; /* Dark grey background */
+    color: #f1f1f1; /* Light grey text */
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-button:hover {
+    background-color: #4a4a4a; /* Slightly darker grey on hover */
+  }
+  
+  /* Custom Delete Button */
+  .delete-button {
+    display: inline-block;
+    padding: 8px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #D9534F; /* Bootstrap 'btn-danger' color */
+    color: #f1f1f1; /* Light grey text */
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .delete-button:hover {
+    background-color: #C9302C; /* Darker shade on hover */
+  }
+  
+  
 
-        .btn-outline-info {
-            background-color: transparent;
-            color: #5bc0de;
-            border: 1px solid #5bc0de;
-        }
+  .sidebar-right form {
+    width: calc(--sidebarRight-width - 50%);
+    color: white;
+    background-color: #3D3D3D;
+    border-radius: 8px;
+    padding: calc(100% - 95%);
+    margin-top: 20px;
+    margin-right: 40px;
+  }
+  
+  .sidebar-right form input[type="text"],
+  .sidebar-right form select {
+    width: calc(100% - 20px); /* Adjust width accounting for padding */
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #464646;
+    color: #f1f1f1;
+  }
+  
+  .sidebar-right form input[type="submit"] {
+    width: calc(100%); /* Adjust width accounting for padding */
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #226580; /* You can change this color to match your design */
+    color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  .sidebar-right form input[type="submit"]:hover {
+    background-color: #1d4d7a; /* Darker shade for hover effect */
+  }
 
-        .btn:not(:last-child) {
-            margin-right: 10px;
-        }
+  .account-section {
+    margin-top: 30px;
+    width: calc(--sidebarRight-width - 50%);
+    margin-right: 40px;
+    border-radius: 8px;
+    padding: 10px;
+    padding-top: 1px;
+    background-color: #333; /* Dark background for the account section */
+    color: #fff; /* White text color */
+  }
+  
+  
+  .welcome-message {
+    margin-bottom: 10px;
+  }
+  
+  .account-link {
+    display: block;
+    color: #fff; /* White text color */
+    margin-bottom: 5px; /* Space between links */
+    text-decoration: none; /* No underline */
+  }
+  
+  .account-link:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  media screen and (max-width: 450px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      border-right: none; /* Remove the border */
+    }
+    .sidebar a {float: none;}
+    .main-content {margin-left: 0;}
+  }
+  
+  .container {
+    background-color: #333; /* Dark background for the container */
+    color: #f1f1f1; /* Light text color for contrast */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners for the container */
+    margin-top: 20px; /* Space above the container */
+  }
+  
+  .container h1 {
+    color: #f1f1f1; /* Light text color for the heading */
+  }
+  
+  .form-control {
+    background-color: #464646; /* Dark background for form elements */
+    color: #f1f1f1; /* Light text color for form elements */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners for form elements */
+    padding: 10px; /* Padding inside form elements */
+    margin-bottom: 10px; /* Space between form elements */
+  }
+  
+  .btn-primary {
+    background-color: #04AA6D; /* Green background for the primary button */
+    color: #FFFFFF; /* White text color for the primary button */
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Padding inside the button */
+    border-radius: 5px; /* Rounded corners for the button */
+    cursor: pointer; /* Cursor change to indicate clickable */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .btn-primary:hover {
+    background-color: #037d56; /* Darker green on hover */
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #5C5C5C; /* Dark grey background for custom button */
+    color: #f1f1f1; /* Light grey text for custom button */
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #4a4a4a; /* Slightly darker grey on hover */
+  }
+  
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Edit Blog Post</h1>
-        <form asp-action="SaveEditBlog" method="post">
-            <input type="hidden" asp-for="blog.Id">
-            <label asp-for="blog.Title">Title:</label>
-            <input asp-for="blog.Title" class="form-control">
-            <br>
-            <label asp-for="blog.Text">Text:</label>
-            <textarea asp-for="blog.Text" class="form-control"></textarea>
-            <br>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-        </form>
-        <div>
-            @Html.ActionLink("Back to List", "Blogs", null, new { @class = "button" })
+    <div class="sidebar">
+        <a href="@Url.Action("Blogs")" class="active">Home page</a>
+        <a>Account info</a>
+    </div>
+
+    <div class="topnav">
+        <p class="active" href="#home">
+            Recent Posts</a>
+            <form class="input" action="SearchBlogs" method="post">
+                <input type="text" name="input" placeholder="Search Blogs" aria-label="Search" class="search-input">
+                <button type="submit" class="submit-button">Search</button>
+            </form>
+
+    </div>
+
+    <div class="sidebar-right">
+        <div class="account-section">
+            <p class="welcome-message">Welcome, User!</p>
+            <a href="profile.html" class="account-link">My Profile</a>
+            <a href="settings.html" class="account-link">Settings</a>
+            <form asp-action="Logout" asp-controller="Login" method="post" class="account-link">
+                <button type="submit" class="btn btn-delete">Logout</button>
+            </form>
         </div>
+
+    </div>
+
+    <div class="main-content">
+
+        <div class="container">
+            <h1>Edit Blog Post</h1>
+            <form asp-action="SaveEditBlog" method="post">
+                <input type="hidden" asp-for="blog.Id">
+                <label asp-for="blog.Title">Title:</label>
+                <input asp-for="blog.Title" class="form-control">
+                <br>
+                <label asp-for="blog.Text">Text:</label>
+                <textarea asp-for="blog.Text" class="form-control"></textarea>
+                <br>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+            <div>
+                @Html.ActionLink("Back to List", "UserBlogs", null, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+
+
     </div>
 </body>

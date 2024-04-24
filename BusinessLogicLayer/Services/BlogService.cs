@@ -32,21 +32,21 @@ namespace BusinessLogicLayer.Classes
         }
 
         //Create Blog
-        public BlogDTO CreateBlog(Blog blog, int id)
+        public BlogDTO CreateBlog(Blog blog, int id, int? user_id)
         {
-            if (blog.Title.Length <= 10)
+            if (blog.Title.Length >= 100 && blog.Title.Length != 0)
             {
-                throw new ArgumentException("Title must be shorter than 50 characters");
+                throw new ArgumentException("Title must be shorter than 100 characters");
             }
-            else if(blog.Text.Length <= 5)
+            else if (blog.Text.Length >= 1000 && blog.Text.Length != 0)
             {
-                throw new ArgumentException("Blog must be shorter than 280 characters");
+                throw new ArgumentException("Blog must be shorter than 1000 characters");
 
             }
             else
             {
                 BlogDTO blogDto = new BlogDTO(blog);
-                repository.CreateBlog(blogDto, id);
+                repository.CreateBlog(blogDto, id, user_id);
 
                 return blogDto;
             }
@@ -83,6 +83,14 @@ namespace BusinessLogicLayer.Classes
         {
             BlogDTO blogDto = new BlogDTO(blog);
             repository.EditBlog(blogDto);
+        }
+
+        public List<Blog> GetUserBlogs(int? id)
+        {
+            List<BlogDTO> blogDtos = repository.GetUserBlogs(id);
+            List<Blog> blogs = blogDtos.Select(dto => new Blog(dto)).ToList();
+            return blogs;
+
         }
 
     }

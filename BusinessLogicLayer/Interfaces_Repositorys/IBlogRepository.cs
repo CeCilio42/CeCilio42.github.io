@@ -11,11 +11,12 @@ namespace BusinessLogicLayer.Interfaces
     public interface IBlogRepository
     {
             List<BlogDTO> GetBlogs();
-            void CreateBlog(BlogDTO blogDto, int id);
+            void CreateBlog(BlogDTO blogDto, int id, int? user_id);
             BlogDTO GetBlogById(int id);
             void DeleteBlogs(int id);
             void EditBlog(BlogDTO blogDto);
             List<BlogDTO> SearchBlogsByInput(string input);
+            List<BlogDTO> GetUserBlogs(int? userId);
 
 
     }

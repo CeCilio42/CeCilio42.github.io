@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Blogs";
+    Layout = null;
 }
 
 <head>
@@ -9,209 +10,421 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Blog</title>
     <style>
+
         body {
-            color: white;
-            font-family: Arial, sans-serif;
-            background-color: #717171;
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+            background-color: #111;
         }
 
-        .search-form {
-            display: inline-block;
+        :root {
+            --sidebar-width: 250px;
+            --topnav-height: 150px;
+            --sidebarRight-width: 400px;
+            --topnav-width: 250px;
         }
 
-        .search-input {
-            width: 0 auto;
-            font-size: 14px;
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100%; /* Full-height: remove this if you want "auto" height */
+            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+            z-index: 1; /* Stay on top */
+            top: 0; /* Stay at the top */
+            left: 0; /* Stay on the left */
+            background-color: #111; /* Black */
+            overflow-x: hidden; /* Disable horizontal scroll */
+            padding-top: 20px;
+            border-right: 5px solid #6b6b6b; /* Right border */
         }
 
-        .search-form button {
-            padding: 0.25rem 0.5rem;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #3D3D3D;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        form {
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        article {
-            border: 2px solid #black;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            background-color: #717171;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #3D3D3D;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .post-container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #FFFFFF;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Header */
-        .post-header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .post-header .author,
-        .post-header .date {
-            font-size: 14px;
-            color: white;
-            margin-bottom: 5px;
-        }
-
-        /* Post Content */
-        .post-content {
-            background-color: #717171;
-            margin-bottom: 20px;
-        }
-
-        /* Comments */
-        .comments {
-            margin-top: 40px;
-        }
-
-            .comments h2 {
-                font-size: 20px;
-                margin-bottom: 10px;
+            /* The sidebar links */
+            .sidebar a {
+                margin-top: 60px;
+                padding: 6px 8px 6px 25px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #ffffff;
+                display: block;
             }
 
-        .comment {
-            background-color: #3D3D3D;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-left: 3px solid #ccc;
+                /* When you mouse over the navigation links, change their color */
+                .sidebar a:hover {
+                    color: #f1f1f1;
+                }
+
+                .sidebar a:active {
+                    border-right: 7px solid rgb(0, 126, 199);
+                }
+
+
+        .sidebar-right {
+            width: var(--sidebarRight-width);
+            height: 100%; /* Full-height: remove this if you want "auto" height */
+            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+            z-index: 1; /* Stay on top */
+            top: 0; /* Stay at the top */
+            right: 0; /* Stay on the left */
+            background-color: #111; /* Black */
+            overflow-x: hidden; /* Disable horizontal scroll */
+            padding-left: 30px;
+            border-left: 5px solid #6b6b6b; /* Right border */
         }
 
-        .comment-author {
-            font-weight: bold;
+
+
+
+        /*----------------------------*/
+
+
+        .topnav {
+            position: relative;
+            background-color: #111;
+            margin-left: var(--sidebar-width);
+            width: calc(100% - --sidebar-width - --sidebarRight-width);
+            height: var(--topnav-height);
+            overflow: hidden;
         }
 
-        .comment-text {
-            margin-top: 5px;
-        }
+            /* Style the links inside the navigation bar */
+            .topnav p {
+                margin-top: 75px;
+                float: left;
+                margin-left: 30px;
+                text-align: center;
+                padding: 6px 8px 6px 16px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #ffffff;
+            }
 
-        /* Post Footer */
-        .post-footer {
-            margin-top: 20px;
-            text-align: right;
-        }
+            .topnav form {
+                width: 30%;
+                margin-top: 75px;
+                float: left;
+                margin-left: 30px;
+                text-align: center;
+                padding: 6px 8px 6px 200px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #ffffff;
+            }
 
-        .btn {
-            padding: 10px 15px;
+            .topnav input[type="text"] {
+                height: 15px;
+                right: 0; /* Aligns the search bar to the right */
+                padding: 15px 15px;
+                margin: 8px 10px;
+                border: none;
+                border-radius: 8px; /* Rounded corners */
+                background-color: #3d3d3d; /* Light grey background */
+                color: #ffffff; /* Dark grey text */
+                font-size: 16px; /* Adjust as needed */
+            }
+
+                /* Placeholder text color */
+                .topnav input[type="text"]::placeholder {
+                    color: #ffffff;
+                }
+
+                /* Search bar hover effect */
+                .topnav input[type="text"]:hover {
+                    background-color: #505050; /* Slightly darker on hover */
+                }
+
+        /* Custom Submit Button */
+        .submit-button {
+            padding: 12px 24px;
+            margin-top: 10px;
             border: none;
             border-radius: 5px;
+            background-color: #008d47; /* Green background */
+            color: #FFFFFF; /* White text */
+            font-size: 16px;
             cursor: pointer;
-            font-size: 14px;
+            transition: background-color 0.3s ease;
         }
 
-        .btn-danger {
-            background-color: #d9534f;
+            .submit-button:hover {
+                background-color: #037d56; /* Darker green on hover */
+            }
+
+
+
+        .topnav > * {
+            margin: 0; /* Remove default margins from children elements */
+        }
+
+        /*----------------------------*/
+        /* Style page content */
+        .main-content {
+            color: #f1f1f1;
+            margin-left: var(--sidebar-width);
+            height: 100%;
+            width: calc(100% - --sidebar-width - --sidebarRight-width);
+            background-color: #111;
+            padding: 0px 40px;
+        }
+
+
+        .blog-post {
+            width: 60%;
+            border-radius: 8px;
+            background-color: #3D3D3D;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+            .blog-post h2 {
+                margin: 0 0 10px 0;
+            }
+
+            .blog-post .date {
+                color: #777;
+                font-size: 0.9em;
+            }
+
+            .blog-post .content {
+                margin-top: 20px;
+            }
+
+            .blog-post .comments {
+                border-radius: 4px;
+                background-color: #464646;
+                margin-top: 20px;
+                padding: 10px;
+            }
+
+                .blog-post .comments h3 {
+                    margin: 0 0 10px 0;
+                }
+
+            .blog-post .category {
+                border-radius: 4px;
+                background-color: #464646;
+                margin-top: 20px;
+                padding-top: 4px;
+                padding-bottom: 4px;
+                padding-left: 10px;
+            }
+
+        /* Style for the Edit button */
+        /* Custom Edit Button */
+        .edit-button {
+            display: inline-block;
+            width: 30px;
+            padding: 6px 25px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background-color: #5C5C5C; /* Dark grey background */
+            color: #f1f1f1; /* Light grey text */
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .edit-button:hover {
+                background-color: #4a4a4a; /* Slightly darker grey on hover */
+            }
+
+        /* Custom Delete Button */
+        .delete-button {
+            display: inline-block;
+            padding: 8px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #D9534F; /* Bootstrap 'btn-danger' color */
+            color: #f1f1f1; /* Light grey text */
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .delete-button:hover {
+                background-color: #C9302C; /* Darker shade on hover */
+            }
+
+
+
+        .sidebar-right form {
+            width: calc(--sidebarRight-width - 50%);
             color: white;
+            background-color: #3D3D3D;
+            border-radius: 8px;
+            padding: calc(100% - 95%);
+            margin-top: 20px;
+            margin-right: 40px;
         }
 
-        .btn-outline-info {
-            background-color: transparent;
-            color: #5bc0de;
-            border: 1px solid #5bc0de;
+            .sidebar-right form input[type="text"],
+            .sidebar-right form select {
+                width: calc(100% - 20px); /* Adjust width accounting for padding */
+                padding: 10px;
+                margin-top: 10px;
+                border: none;
+                border-radius: 4px;
+                background-color: #464646;
+                color: #f1f1f1;
+            }
+
+            .sidebar-right form input[type="submit"] {
+                width: calc(100%); /* Adjust width accounting for padding */
+                padding: 10px;
+                margin-top: 20px;
+                border: none;
+                border-radius: 4px;
+                background-color: #226580; /* You can change this color to match your design */
+                color: #f1f1f1;
+                cursor: pointer;
+            }
+
+                .sidebar-right form input[type="submit"]:hover {
+                    background-color: #1d4d7a; /* Darker shade for hover effect */
+                }
+
+        .account-section {
+            margin-top: 30px;
+            width: calc(--sidebarRight-width - 50%);
+            margin-right: 40px;
+            border-radius: 8px;
+            padding: 10px;
+            padding-top: 1px;
+            background-color: #333; /* Dark background for the account section */
+            color: #fff; /* White text color */
         }
 
-        .btn:not(:last-child) {
-            margin-right: 10px;
+
+        .welcome-message {
+            margin-bottom: 10px;
+        }
+
+        .account-link {
+            display: block;
+            color: #fff; /* White text color */
+            margin-bottom: 5px; /* Space between links */
+            text-decoration: none; /* No underline */
+        }
+
+            .account-link:hover {
+                text-decoration: underline; /* Underline on hover */
+            }
+
+        media screen and (max-width: 450px) {
+            .sidebar
+
+        {
+            width: 100%;
+            height: auto;
+            position: relative;
+            border-right: none; /* Remove the border */
+        }
+
+        .sidebar a {
+            float: none;
+        }
+
+        .main-content {
+            margin-left: 0;
+        }
+
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Hello, </h1>
-        <hr>
+    <div class="sidebar">
+        <a>Account info</a>
+    </div>
 
-        <hr>
+    <div class="topnav">
+        <p class="active" href="#home">
+            Recent Posts</a>
+            <form class="input" action="SearchBlogs" method="post">
+                <input type="text" name="input" placeholder="Search Blogs" aria-label="Search" class="search-input">
+                <button type="submit" class="submit-button">Search</button>
+            </form>
+
+    </div>
+
+    <div class="sidebar-right">
+        <div class="account-section">
+            <p class="welcome-message">Welcome!</p>
+            <a href="profile.html" class="account-link">My Profile</a>
+            <a href="settings.html" class="account-link">Settings</a>
+            <form asp-action="Logout" asp-controller="Login" method="post" class="account-link">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+
+        </div>
+
+
         <form action="CreateBlogUser" method="post">
             <input type="text" name="Title" placeholder="Blog Title">
             <input type="text" name="Text" placeholder="Blog Text">
-            <select name="CategoryID">
-                @foreach (var category in Model.categories)
+            <select name="Id">
+                @foreach (var categorie in Model.categories)
                 {
-                    <option value="@category.Id">@category.Title</option>
+                    <option value="@categorie.Id">@categorie.Title</option>
                 }
             </select>
-            <p>  </p>
             <input type="submit" value="Create">
         </form>
-        <hr>
+    </div>
+
+    <div class="main-content">
+        @foreach (var blog in Model.OwnersList)
+        {
+            <div class="blog-post">
+                <h2>@blog.Title</h2>
+                <p class="date">Posted on @blog.Date</p>
+                <p class="date">Blog by you</p>
+                <div class="content">
+                    <p>@blog.Text</p>
+                </div>
+                @if (blog.CategoryTitle.Length >= 1)
+                {
+                    <div class="category">
+                        <p>Category: @blog.CategoryTitle</p>
+                    </div>
+                }
+
+                <a href="@Url.Action("EditBlog", new { id = blog.Id })" class="edit-button">Edit</a>
+                <form action="DeleteBlogUser" method="post">
+                    <input type="hidden" name="Id" value="@blog.Id">
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
+            </div>
+        }
+
+        <div class="blog-post">
+            <h2>Others</h2>
+        </div>
 
         @foreach (var blog in Model.BlogList)
         {
-            <article>
-                <h1>@blog.Title</h1>
-                <p>Published on April 4, 2024</p>
-                <p>@blog.Text</p>
-                <hr>
+            <div class="blog-post">
+                <h2>@blog.Title</h2>
+                <p class="date">Posted on @blog.Date</p>
+                <p class="date">Blog by @blog.Username</p>
+
+                <div class="content">
+                    <p>@blog.Text</p>
+                </div>
                 @if (blog.CategoryTitle.Length >= 1)
                 {
-                    <p>Categorie: @blog.CategoryTitle</p>
+                    <div class="category">
+                        <p>Category: @blog.CategoryTitle</p>
+                    </div>
                 }
-                
-            </article>
-
+            </div>
         }
     </div>
+
+
+
 </body>
+
+
+
+

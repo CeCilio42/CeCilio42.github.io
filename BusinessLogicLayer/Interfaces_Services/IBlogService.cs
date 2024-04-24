@@ -11,10 +11,11 @@ namespace BusinessLogicLayer.Interfaces_Services
     public interface IBlogService
     {
         List<Blog> GetBlogs();
-        BlogDTO CreateBlog(Blog blog, int id);
+        BlogDTO CreateBlog(Blog blog, int id, int? user_id);
         void DeleteBlog(int blogId);
         Blog GetBlogById(int id);
         void EditBlog(Blog blog);
         List<Blog> SearchBlogsByInput(string input);
+        List<Blog> GetUserBlogs(int? id);
     }
 }

@@ -38,9 +38,6 @@ namespace BusinessLogicLayer.Classes
             return categorie;
         }
 
-
-
-
         public void EditCategorie(Categorie categorie)
         {
             CategorieDTO categoryDto = new CategorieDTO(categorie);
