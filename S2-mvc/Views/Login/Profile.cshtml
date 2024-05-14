@@ -1,0 +1,388 @@
+﻿@model BlogViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<style>
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial;
+        background-color: #111;
+    }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+    }
+
+    :root {
+        --sidebar-width: 250px;
+        --topnav-height: 150px;
+        --sidebarRight-width: 400px;
+        --topnav-width: 250px;
+    }
+
+    .sidebar {
+        width: var(--sidebar-width);
+        height: 100%; /* Full-height: remove this if you want "auto" height */
+        position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+        z-index: 1; /* Stay on top */
+        top: 0; /* Stay at the top */
+        left: 0; /* Stay on the left */
+        background-color: #111; /* Black */
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 20px;
+        border-right: 5px solid #6b6b6b; /* Right border */
+    }
+
+        /* The sidebar links */
+        .sidebar a {
+            margin-top: 60px;
+            padding: 6px 8px 6px 25px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #ffffff;
+            display: block;
+        }
+
+            /* When you mouse over the navigation links, change their color */
+            .sidebar a:hover {
+                color: #f1f1f1;
+            }
+
+            .sidebar a:active {
+                border-right: 7px solid rgb(0, 126, 199);
+            }
+
+
+    .sidebar-right {
+        width: var(--sidebarRight-width);
+        height: 100%; /* Full-height: remove this if you want "auto" height */
+        position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+        z-index: 1; /* Stay on top */
+        top: 0; /* Stay at the top */
+        right: 0; /* Stay on the left */
+        background-color: #111; /* Black */
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-left: 30px;
+        border-left: 5px solid #6b6b6b; /* Right border */
+    }
+
+
+
+
+    /*----------------------------*/
+
+
+    .topnav {
+        position: relative;
+        background-color: #111;
+        margin-left: var(--sidebar-width);
+        width: calc(100% - --sidebar-width - --sidebarRight-width);
+        height: var(--topnav-height);
+        overflow: hidden;
+    }
+
+        /* Style the links inside the navigation bar */
+        .topnav p {
+            margin-top: 75px;
+            float: left;
+            margin-left: 30px;
+            text-align: center;
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #ffffff;
+        }
+
+        .topnav form {
+            width: 30%;
+            margin-top: 75px;
+            float: left;
+            margin-left: 30px;
+            text-align: center;
+            padding: 6px 8px 6px 200px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #ffffff;
+        }
+
+        .topnav input[type="text"] {
+            height: 15px;
+            right: 0; /* Aligns the search bar to the right */
+            padding: 15px 15px;
+            margin: 8px 10px;
+            border: none;
+            border-radius: 8px; /* Rounded corners */
+            background-color: #3d3d3d; /* Light grey background */
+            color: #ffffff; /* Dark grey text */
+            font-size: 16px; /* Adjust as needed */
+        }
+
+            /* Placeholder text color */
+            .topnav input[type="text"]::placeholder {
+                color: #ffffff;
+            }
+
+            /* Search bar hover effect */
+            .topnav input[type="text"]:hover {
+                background-color: #505050; /* Slightly darker on hover */
+            }
+
+    /* Custom Submit Button */
+    .submit-button {
+        padding: 12px 24px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #008d47; /* Green background */
+        color: #FFFFFF; /* White text */
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .submit-button:hover {
+            background-color: #037d56; /* Darker green on hover */
+        }
+
+
+
+    .topnav > * {
+        margin: 0; /* Remove default margins from children elements */
+    }
+
+    /*----------------------------*/
+    /* Style page content */
+    .main-content {
+        color: #f1f1f1;
+        margin-left: var(--sidebar-width);
+        height: 100%;
+        width: calc(100% - --sidebar-width - --sidebarRight-width);
+        background-color: #111;
+        padding: 0px 40px;
+    }
+
+
+    .blog-post {
+        width: 60%;
+        border-radius: 8px;
+        background-color: #3D3D3D;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+        .blog-post h2 {
+            margin: 0 0 10px 0;
+        }
+
+        .blog-post .date {
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        .blog-post .content {
+            margin-top: 20px;
+        }
+
+        .blog-post .comments {
+            border-radius: 4px;
+            background-color: #464646;
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+            .blog-post .comments h3 {
+                margin: 0 0 10px 0;
+            }
+
+        .blog-post .category {
+            border-radius: 4px;
+            background-color: #464646;
+            margin-top: 20px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            padding-left: 10px;
+        }
+
+    /* Style for the Edit button */
+    /* Custom Edit Button */
+    .edit-button {
+        display: inline-block;
+        width: 30px;
+        padding: 6px 25px;
+        margin-top: 10px;
+        border-radius: 5px;
+        background-color: #5C5C5C; /* Dark grey background */
+        color: #f1f1f1; /* Light grey text */
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .edit-button:hover {
+            background-color: #4a4a4a; /* Slightly darker grey on hover */
+        }
+
+    /* Custom Delete Button */
+    .delete-button {
+        display: inline-block;
+        padding: 8px 20px;
+        margin: 10px 0;
+        border-radius: 5px;
+        background-color: #D9534F; /* Bootstrap 'btn-danger' color */
+        color: #f1f1f1; /* Light grey text */
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .delete-button:hover {
+            background-color: #C9302C; /* Darker shade on hover */
+        }
+
+
+
+    .sidebar-right form {
+        width: calc(--sidebarRight-width - 50%);
+        color: white;
+        background-color: #3D3D3D;
+        border-radius: 8px;
+        padding: calc(100% - 95%);
+        margin-top: 20px;
+        margin-right: 40px;
+    }
+
+        .sidebar-right form input[type="text"],
+        .sidebar-right form select {
+            width: calc(100% - 20px); /* Adjust width accounting for padding */
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #464646;
+            color: #f1f1f1;
+        }
+
+        .sidebar-right form input[type="submit"] {
+            width: calc(100%); /* Adjust width accounting for padding */
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #226580; /* You can change this color to match your design */
+            color: #f1f1f1;
+            cursor: pointer;
+        }
+
+            .sidebar-right form input[type="submit"]:hover {
+                background-color: #1d4d7a; /* Darker shade for hover effect */
+            }
+
+    .account-section {
+        margin-top: 30px;
+        width: calc(--sidebarRight-width - 50%);
+        margin-right: 40px;
+        border-radius: 8px;
+        padding: 10px;
+        padding-top: 1px;
+        background-color: #333; /* Dark background for the account section */
+        color: #fff; /* White text color */
+    }
+
+
+    .welcome-message {
+        margin-bottom: 10px;
+    }
+
+    .account-link {
+        display: block;
+        color: #fff; /* White text color */
+        margin-bottom: 5px; /* Space between links */
+        text-decoration: none; /* No underline */
+    }
+
+        .account-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+    .error-message {
+        position: fixed; /* Fixed position */
+        top: 20px; /* Distance from the top */
+        right: 20px; /* Distance from the right */
+        background-color: #f44336; /* Red background color */
+        color: white; /* White text color */
+        padding: 12px 24px; /* Padding around the text */
+        z-index: 1000; /* High z-index to float above other elements */
+        border-radius: 4px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for better visibility */
+    }
+
+
+
+
+    media screen and (max-width: 450px) {
+        .sidebar
+
+    {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none; /* Remove the border */
+    }
+
+    .sidebar a {
+        float: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    }
+</style>
+
+<body>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+
+        <div class="error-message">
+            @ViewBag.ErrorMessage
+        </div>
+
+    }
+
+    <div class="sidebar">
+        <a href="@Url.Action("Blogs", "Home")" class="active">Home page</a>
+        <a>Account info</a>
+    </div>
+
+
+
+
+    <div class="topnav">
+    </div>
+
+    <div class="sidebar-right">
+        <div class="account-section">
+            <form asp-action="Logout" asp-controller="Login" method="post" class="account-link">
+                <button type="submit" class="delete-button">Logout</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="main-content">
+    </div>
+
+
+
+</body>

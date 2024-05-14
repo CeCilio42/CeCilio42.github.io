@@ -16,5 +16,7 @@ namespace S2_mvc.Models
         public List<Blog> SearchList { get; set; }
 
         public User User { get; set; }
+
+
     }
 }

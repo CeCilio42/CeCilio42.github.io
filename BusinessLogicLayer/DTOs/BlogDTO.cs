@@ -20,6 +20,7 @@ namespace BusinessLogicLayer.DTO_s
             CategoryTitle = blog.CategoryTitle;
             Date = blog.Date;
             Username = blog.Username;
+            profile_picture = blog.profile_picture;
         }
 
         public int id { get; set; }
@@ -29,5 +30,7 @@ namespace BusinessLogicLayer.DTO_s
         public string Username{ get; set; }
 
         public string Date {  get; set; }
+        public string profile_picture { get; set; }
+
     }
 }

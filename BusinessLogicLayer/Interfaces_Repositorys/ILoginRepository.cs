@@ -8,7 +8,7 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface ILoginRepository
     {
-        (bool, int) Login(string username, string password);
+        (bool, int, string) Login(string username, string password);
         bool CheckRole(string username, string password);
     }
 }

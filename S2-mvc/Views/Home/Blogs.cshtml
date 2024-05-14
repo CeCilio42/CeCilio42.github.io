@@ -5,417 +5,361 @@
     Layout = null;
 }
 
+
+
+
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog</title>
+    <title>StudentBlogs</title>
     <style>
-
-    body{
-    margin: 0;
-    padding: 0;
-    font-family: Arial;
-    background-color: #111;
-    }
-
-        .error-message {
-            color: red;
-            font-weight: bold;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #242424;
         }
 
-:root {
-    --sidebar-width: 250px;
-    --topnav-height: 150px;
-    --sidebarRight-width: 400px;
-    --topnav-width: 250px;
-  }
+        .error-message {
+            position: fixed; /* Fixed position */
+            top: 20px; /* Distance from the top */
+            right: 20px; /* Distance from the right */
+            background-color: #f44336; /* Red background color */
+            color: white; /* White text color */
+            padding: 12px 24px; /* Padding around the text */
+            z-index: 1000; /* High z-index to float above other elements */
+            border-radius: 4px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for better visibility */
+        }
 
-.sidebar {
-    width: var(--sidebar-width);
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0; /* Stay on the left */
-    background-color: #111; /* Black */
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
-    border-right: 5px solid #6b6b6b; /* Right border */
-  }
-  
-  /* The sidebar links */
-  .sidebar a {
-    margin-top: 60px;
-    padding: 6px 8px 6px 25px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #ffffff;
-    display: block;
-  }
-  
-  /* When you mouse over the navigation links, change their color */
-  .sidebar a:hover {
-    color: #f1f1f1;
-  }
+        .topbar {
+            width: 100%;
+            height: 60px;
+            background-color: #242424;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            top: 0; /* Stay at the top */
+            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
 
-  .sidebar a:active{
-    border-right: 7px solid rgb(0, 126, 199);
-  }
+        .search-container {
+            margin-left: 250px;
+        }
+
+        .search-input {
+            width: 200px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-button {
+            background-color: green;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reset-button {
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 200px;
+            background-color: #242424;
+            color: #fff;
+            padding: 20px;
+            display: block;
+            overflow-x: hidden; /* Disable horizontal scroll */
+            height: 100%; /* Full-height: remove this if you want "auto" height */
+            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+            z-index: 1; /* Stay on top */
+            top: 0; /* Stay at the top */
+            left: 0; /* Stay on the left */
+        }
+
+            .sidebar img {
+                max-width: 100px;
+                border-radius: 50%;
+                vertical-align: middle;
+            }
+
+            .sidebar ul {
+                font-size: larger;
+                margin-left: 13px;
+                list-style: none;
+                padding: 0;
+            }
+
+            .sidebar li {
+                margin-bottom: 10px;
+            }
+
+            .sidebar a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+        .info-section {
+            margin-top: auto;
+        }
+
+            .info-section span {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .info-section :hover {
+                color: red;
+                cursor: pointer;
+            }
+
+            .info-section img {
+                max-width: 45px;
+            }
+
+        .sidebar hr {
+            border: none;
+            height: 1px;
+            background-color: #fff;
+            margin: 10px 0;
+        }
+
+        /* Example CSS for main-content */
+        .main-content {
+            /* Adjust the width and margin as needed */
+            width: 70%;
+            margin: 0 auto;
+            margin-left: 280px;
+            margin-top: 100px;
+            padding: 30px;
+            background-color: #242424;
+            border-radius: 2px;
+        }
+
+        .blog-post {
+            background-color: rgba(90, 90, 90, 0.838);
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 40px; /* Add some space between blog posts */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 4.5);
+            border-radius: 3px;
+            border-color: black;
+        }
+
+        /* Example styling for blog post title */
+        .blog-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Example styling for blog post text */
+        .blog-text {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Example styling for blog post username */
+        .blog-username {
+            font-size: 14px;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        /* Example styling for blog post category */
+        .blog-category {
+            font-size: 14px;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        /* Example styling for blog post buttons */
+        .blog-buttons button {
+            background-color: #a6a6a6;
+            color: black;
+            border: none;
+            padding: 5px 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+            /* Add hover effects or additional styles as desired */
+            .blog-buttons button:hover {
+                background-color: #0056b3;
+            }
+
+        .blog-image img {
+            max-width: 100%; /* Ensure the image doesn't exceed its container */
+            display: block; /* Remove any extra spacing around the image */
+            margin-top: 10px; /* Add some spacing between text and image */
+        }
 
 
-  .sidebar-right {
-    width: var(--sidebarRight-width);
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    right: 0; /* Stay on the left */
-    background-color: #111; /* Black */
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-left: 30px;
-    border-left: 5px solid #6b6b6b; /* Right border */
-  }
+        /* Example styling for the form */
+        .blog-form {
+            margin-top: 20px;
+        }
 
-  
+            .blog-form input[type="text"],
+            .blog-form select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 14px;
+            }
 
+            .blog-form select {
+                background-color: #f9f9f9;
+            }
 
-/*----------------------------*/
+            .blog-form .edit-button {
+                display: block;
+                margin-top: 10px;
+                color: #007bff;
+                text-decoration: none;
+            }
 
+            .blog-form input[type="submit"] {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
 
-.topnav {
-    position: relative;
-    background-color: #111;
-    margin-left: var(--sidebar-width);
-    width: calc(100% - --sidebar-width - --sidebarRight-width);
-    height: var(--topnav-height);
-    overflow: hidden;
-  }
-  
-  /* Style the links inside the navigation bar */
-  .topnav p {
-    margin-top: 75px;
-    float: left;
-    margin-left: 30px;
-    text-align: center;
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #ffffff;
-  }
+                .blog-form input[type="submit"]:hover {
+                    background-color: #0056b3;
+                }
+        /* Example styling for the "New blog" text */
+        .new-blog-text {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        /* Example styling for the blog post image */
+        .blog-post img {
+            margin-bottom: 3px;
+            max-width: 4%; /* Ensure the image doesn't exceed its container */
+            border-radius: 100px; /* Add a subtle border radius for a softer look */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Apply a shadow effect */
+        }
 
-  .topnav form {
-    width: 30%;
-    margin-top: 75px;
-    float: left;
-    margin-left: 30px;
-    text-align: center;
-    padding: 6px 8px 6px 200px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #ffffff;
-  }
-
-  .topnav input[type="text"] {
-    height: 15px;
-    right: 0; /* Aligns the search bar to the right */
-    padding: 15px 15px;
-    margin: 8px 10px;
-    border: none;
-    border-radius: 8px; /* Rounded corners */
-    background-color: #3d3d3d; /* Light grey background */
-    color: #ffffff; /* Dark grey text */
-    font-size: 16px; /* Adjust as needed */
-  }
-  
-  /* Placeholder text color */
-  .topnav input[type="text"]::placeholder {
-    color: #ffffff;
-  }
-  
-  /* Search bar hover effect */
-  .topnav input[type="text"]:hover {
-    background-color: #505050; /* Slightly darker on hover */
-  }
-
-  /* Custom Submit Button */
-.submit-button {
-    padding: 12px 24px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #008d47; /* Green background */
-    color: #FFFFFF; /* White text */
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submit-button:hover {
-    background-color: #037d56; /* Darker green on hover */
-  }
-  
-
-  
-  .topnav > * {
-    margin: 0; /* Remove default margins from children elements */
-  }
-
-  /*----------------------------*/
-  /* Style page content */
-  .main-content {
-    color: #f1f1f1;
-    margin-left: var(--sidebar-width);
-    height: 100%;
-    width: calc(100% - --sidebar-width - --sidebarRight-width);
-    background-color: #111;
-    padding: 0px 40px;
-  }
-
-
-  .blog-post {
-    width: 60%;
-    border-radius: 8px;
-    background-color: #3D3D3D;
-    padding: 20px;
-    margin-top: 20px;
-  }
-
-  .blog-post h2 {
-    margin: 0 0 10px 0;
-  }
-
-  .blog-post .date {
-    color: #777;
-    font-size: 0.9em;
-  }
-
-  .blog-post .content {
-    margin-top: 20px;
-  }
-
-  .blog-post .comments {
-
-    border-radius: 4px;
-    background-color: #464646;
-    margin-top: 20px;
-    padding: 10px;
-  }
-
-  .blog-post .comments h3 {
-    margin: 0 0 10px 0;
-  }
-
-  .blog-post .category{
-    border-radius: 4px;
-    background-color: #464646;
-    margin-top: 20px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    padding-left: 10px;
-
-  }
-
-  /* Style for the Edit button */
-/* Custom Edit Button */
-.edit-button {
-    display: inline-block;
-    width: 30px;
-    padding: 6px 25px;
-    margin-top: 10px;
-    border-radius: 5px;
-    background-color: #5C5C5C; /* Dark grey background */
-    color: #f1f1f1; /* Light grey text */
-    text-align: center;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-  
-  .edit-button:hover {
-    background-color: #4a4a4a; /* Slightly darker grey on hover */
-  }
-  
-  /* Custom Delete Button */
-  .delete-button {
-    display: inline-block;
-    padding: 8px 20px;
-    margin: 10px 0;
-    border-radius: 5px;
-    background-color: #D9534F; /* Bootstrap 'btn-danger' color */
-    color: #f1f1f1; /* Light grey text */
-    text-align: center;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .delete-button:hover {
-    background-color: #C9302C; /* Darker shade on hover */
-  }
-  
-  
-
-  .sidebar-right form {
-    width: calc(--sidebarRight-width - 50%);
-    color: white;
-    background-color: #3D3D3D;
-    border-radius: 8px;
-    padding: calc(100% - 95%);
-    margin-top: 20px;
-    margin-right: 40px;
-  }
-  
-  .sidebar-right form input[type="text"],
-  .sidebar-right form select {
-    width: calc(100% - 20px); /* Adjust width accounting for padding */
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #464646;
-    color: #f1f1f1;
-  }
-  
-  .sidebar-right form input[type="submit"] {
-    width: calc(100%); /* Adjust width accounting for padding */
-    padding: 10px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #226580; /* You can change this color to match your design */
-    color: #f1f1f1;
-    cursor: pointer;
-  }
-  
-  .sidebar-right form input[type="submit"]:hover {
-    background-color: #1d4d7a; /* Darker shade for hover effect */
-  }
-
-  .account-section {
-    margin-top: 30px;
-    width: calc(--sidebarRight-width - 50%);
-    margin-right: 40px;
-    border-radius: 8px;
-    padding: 10px;
-    padding-top: 1px;
-    background-color: #333; /* Dark background for the account section */
-    color: #fff; /* White text color */
-  }
-  
-  
-  .welcome-message {
-    margin-bottom: 10px;
-  }
-  
-  .account-link {
-    display: block;
-    color: #fff; /* White text color */
-    margin-bottom: 5px; /* Space between links */
-    text-decoration: none; /* No underline */
-  }
-  
-  .account-link:hover {
-    text-decoration: underline; /* Underline on hover */
-  }
-
-  media screen and (max-width: 450px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-      border-right: none; /* Remove the border */
-    }
-    .sidebar a {float: none;}
-    .main-content {margin-left: 0;}
-  }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <a href="@Url.Action("Blogs")" class="active">Home page</a>
-        <a>Account info</a>
-    </div>
 
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="error-message">
+            @ViewBag.ErrorMessage
+        </div>
+    }
 
-
-    <div class="topnav">
-        @if (ViewBag.ErrorMessage != null)
-        {
-            <div class="error-message">
-                @ViewBag.ErrorMessage
-            </div>
-        }
-        <p class="active" href="#home">
-            Recent Posts</a>
+    <div class="topbar">
+        <div class="search-container">
             <form class="input" action="SearchBlogs" method="post">
                 <input type="text" name="input" placeholder="Search Blogs" aria-label="Search" class="search-input">
-                <button type="submit" class="submit-button">Search</button>
-            </form>
-
-    </div>
-
-    <div class="sidebar-right">
-        <div class="account-section">
-            <p class="welcome-message">Welcome, User!</p>
-            <a href="profile.html" class="account-link">My Profile</a>
-            <a href="settings.html" class="account-link">Settings</a>
-            <form asp-action="Logout" asp-controller="Login" method="post" class="account-link">
-                <button type="submit" class="btn btn-danger">Logout</button>
+                <button type="submit" class="search-button">Search</button>
             </form>
         </div>
+    </div>
+
+    <div class="sidebar">
+        <img src="@Model.User.profile_picture" alt="Logo">
+        <ul>
+            <li><a href="#">Hello, admin</a></li>
+        </ul>
+        <hr>
+        <div class="info-section">
+            <br>
+            <img src="https://www.freepnglogos.com/uploads/logo-home-png/home-logo-images-black-5.png" alt="Image 2">
+            <span>
+                <a href="@Url.Action("Blogs")" class="active">Home page</a>
+            </span>
+            <br>
+            <img src="https://icon-library.com/images/category-icon-png/category-icon-png-2.jpg" alt="Image 2">
+            <span>
+                <a href="@Url.Action("EditCategories", "Categorie")" class="edit-button">Edit</a>
+            </span>
+            <br>
+            <img src="https://cdn2.iconfinder.com/data/icons/picons-essentials/57/logout-1024.png" alt="Image 2">
+            <span>
+                <form asp-action="Logout" asp-controller="Login" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            </span>
 
 
-        <form action="CreateBlog" method="post">
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="new-blog-text">New blog</div>
+        <form action="CreateBlog" method="post" class="blog-form">
             <input type="text" name="Title" placeholder="Blog Title" required>
             <input type="text" name="Text" placeholder="Blog Text" required>
             <select name="Id">
                 @foreach (var categorie in Model.categories)
                 {
                     <option value="@categorie.Id">@categorie.Title</option>
-
                 }
             </select>
-            <a href="@Url.Action("EditCategories", "Categorie")" class="edit-button">Edit</a>
-            <input type="submit" value="Create">
-
-
-
-
+            <input class="reset-button" type="submit" value="Create">
         </form>
     </div>
 
     <div class="main-content">
+
         @foreach (var blog in Model.BlogList)
         {
-
-
             <div class="blog-post">
-                <h2>@blog.Title</h2>
-                <p class="date">Posted on @blog.Date</p>
-                <p class="date">Blog by @blog.Username</p>
-                <div class="content">
-                    <p>@blog.Text</p>
+                <img src="@blog.profile_picture">
+                <div class="blog-title">@blog.Title</div>
+                <div class="blog-text">
+                    @blog.Text
                 </div>
-                @if (blog.CategoryTitle.Length >= 1)
-                {
-                    <div class="category">
-                        <p>Category: @blog.CategoryTitle</p>
-                    </div>
-                }
+                <div class="blog-category">Category: @blog.CategoryTitle</div>
+                <div class="blog-buttons">
+                    <form action="DeleteBlog" method="post">
+                        <input type="hidden" name="Id" value="@blog.Id">
+                        <button class="delete-button" type="submit">Delete</button>
+                    </form>
+                </div>
+                <br>
+                <div class="blog-username">Posted by: @blog.Username</div>
 
-                <form action="DeleteBlog" method="post">
-                    <input type="hidden" name="Id" value="@blog.Id">
-                    <button type="submit" class="delete-button">Delete</button>
-                </form>
             </div>
         }
 
-        <!-- Include more blog posts as needed -->
     </div>
 
-
-
 </body>
+
 
 
 

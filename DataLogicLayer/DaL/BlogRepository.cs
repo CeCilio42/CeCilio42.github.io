@@ -31,14 +31,14 @@ namespace BusinessLogicLayer
         public List<BlogDTO> GetBlogs()
         {
             List<BlogDTO> blogs = new List<BlogDTO>();
-            string query = "SELECT b.id, b.title, b.text, b.date, u.username, c.title " +
-                "AS categorie_title FROM blog b " +
-                "LEFT JOIN users u ON b.user_id = u.id " +
-                "LEFT JOIN blogcategorie bc " +
-                "ON b.id = bc.blog_id " +
-                "LEFT JOIN categorie c " +
-                "ON bc.categorie_id = c.id " +
-                "ORDER BY b.id DESC;";
+            string query = "SELECT b.id, b.title, b.text, b.date, u.username, u.profile_picture, c.title " +
+                            "AS categorie_title FROM blog b " +
+                            "LEFT JOIN users u ON b.user_id = u.id " +
+                            "LEFT JOIN blogcategorie bc " +
+                            "ON b.id = bc.blog_id " +
+                            "LEFT JOIN categorie c " +
+                            "ON bc.categorie_id = c.id " +
+                            "ORDER BY b.id DESC;";
             try
             {
                 if (connection.OpenConnection())
@@ -55,6 +55,7 @@ namespace BusinessLogicLayer
                         blogDTO.CategoryTitle = dataReader["categorie_title"].ToString();
                         blogDTO.Date = dataReader["date"].ToString();
                         blogDTO.Username = dataReader["username"].ToString();
+                        blogDTO.profile_picture = dataReader["profile_picture"].ToString();
 
                         blogs.Add(blogDTO);
                     }
@@ -64,6 +65,7 @@ namespace BusinessLogicLayer
             }
             catch (Exception ex)
             {
+                //new EventHandler(, ex);
                 Console.WriteLine("An error occured: " + ex);
             }
             finally
@@ -78,7 +80,7 @@ namespace BusinessLogicLayer
         public List<BlogDTO> SearchBlogsByInput(string input)
         {
             List<BlogDTO> blogs = new List<BlogDTO>();
-            string query = "SELECT b.id, b.title, b.text, b.date, u.username, c.title " +
+            string query = "SELECT b.id, b.title, b.text, b.date, u.username, u.profile_picture, c.title " +
                            "AS categorie_title FROM blog b " +
                            "LEFT JOIN users u ON b.user_id = u.id " +
                            "LEFT JOIN blogcategorie bc ON b.id = bc.blog_id " +
@@ -104,6 +106,7 @@ namespace BusinessLogicLayer
                         blogDTO.CategoryTitle = dataReader["categorie_title"].ToString();
                         blogDTO.Date = dataReader["date"].ToString();
                         blogDTO.Username = dataReader["username"].ToString();
+                        blogDTO.profile_picture = dataReader["profile_picture"].ToString();
 
                         blogs.Add(blogDTO);
                     }
@@ -285,12 +288,13 @@ namespace BusinessLogicLayer
         {
             List<BlogDTO> blogs = new List<BlogDTO>();
 
-            string query = "SELECT b.id, b.title, b.text, c.title " +
-               "AS categorie_title FROM blog b " +
-               "LEFT JOIN blogcategorie bc ON b.id = bc.blog_id " +
-               "LEFT JOIN categorie c ON bc.categorie_id = c.id " +
-               "WHERE b.user_id = @userId " + 
-               "ORDER BY b.id DESC";
+            string query = "SELECT b.id, b.title, b.text, u.profile_picture, c.title " +
+                           "AS categorie_title FROM blog b " +
+                           "LEFT JOIN users u ON b.user_id = u.id " +
+                           "LEFT JOIN blogcategorie bc ON b.id = bc.blog_id " +
+                           "LEFT JOIN categorie c ON bc.categorie_id = c.id " +
+                           "WHERE b.user_id = @userId " +
+                           "ORDER BY b.id DESC";
 
             try
             {
@@ -308,6 +312,7 @@ namespace BusinessLogicLayer
                         blogDTO.Name = dataReader["title"].ToString();
                         blogDTO.Description = dataReader["text"].ToString();
                         blogDTO.CategoryTitle = dataReader["categorie_title"].ToString();
+                        blogDTO.profile_picture = dataReader["profile_picture"].ToString();
 
                         blogs.Add(blogDTO);
                     }

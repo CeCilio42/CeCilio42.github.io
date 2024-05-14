@@ -2,7 +2,8 @@
 using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Entitys;
 using BusinessLogicLayer.Interfaces;
-using BusinessLogicLayer.Interfaces_Services;
+using DataAccessLayer.DaL;
+using DataLogicLayer.DaL;
 using Microsoft.AspNetCore.Mvc;
 using S2_mvc.Models;
 
@@ -10,13 +11,11 @@ namespace S2_mvc.Controllers
 {
     public class CategorieController : Controller
     {
+        private readonly CategorieService categorieService;
 
-
-        private readonly ICategorieService categorieService;
-
-        public CategorieController(ICategorieService _categorieService)
+        public CategorieController()
         {
-            categorieService = _categorieService;
+            categorieService = new CategorieService(new CategorieRepository());
         }
 
         //Get categories to edit

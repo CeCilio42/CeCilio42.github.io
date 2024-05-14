@@ -5,11 +5,10 @@ using BusinessLogicLayer.Interfaces;
 using DataLogicLayer.Entitys;
 using BusinessLogicLayer.Entitys;
 using System.Net.Http.Headers;
-using BusinessLogicLayer.Interfaces_Services;
 
 namespace BusinessLogicLayer.Classes
 {
-    public class CategorieService : ICategorieService
+    public class CategorieService
     {
 
         List<Categorie> categories = new List<Categorie>();

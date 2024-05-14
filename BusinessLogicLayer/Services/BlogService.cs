@@ -2,7 +2,7 @@
 using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
 using DataLogicLayer.Entitys;
-using BusinessLogicLayer.Interfaces_Services;
+using BusinessLogicLayer.Errors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Classes
 {
-    public class BlogService : IBlogService
+    public class BlogService
     {
         List<BlogDTO> blogs = new List<BlogDTO>();
 
@@ -32,30 +32,51 @@ namespace BusinessLogicLayer.Classes
         }
 
         //Create Blog
-        public BlogDTO CreateBlog(Blog blog, int id, int? user_id)
+        public ServiceResponce CreateBlog(Blog blog, int id, int? user_id)
         {
+            ServiceResponce response = new ServiceResponce() { Success = false };
+
             if (blog.Title.Length >= 100 && blog.Title.Length != 0)
             {
-                throw new ArgumentException("Title must be shorter than 100 characters");
+                response.ErrorMessage = "Title must be shorter than 100 characters";
+                return response;
             }
-            else if (blog.Text.Length >= 1000 && blog.Text.Length != 0)
+            if (blog.Text.Length >= 1000 && blog.Text.Length != 0)
             {
-                throw new ArgumentException("Blog must be shorter than 1000 characters");
-
+                response.ErrorMessage = "Blog must be shorter than 1000 characters";
+                return response;
             }
-            else
+
+            try
             {
-                BlogDTO blogDto = new BlogDTO(blog);
-                repository.CreateBlog(blogDto, id, user_id);
-
-                return blogDto;
+                    BlogDTO blogDto = new BlogDTO(blog);
+                    repository.CreateBlog(blogDto, id, user_id);
+                    response.Success = true;
+                
+            }
+            catch (ArgumentException argEx)
+            {
+                response.Success = false;
+                response.ErrorMessage = argEx.Message;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.ErrorMessage = "An unexpected error occurred.";
             }
 
+            return response;
         }
+
 
 
         public List<Blog> SearchBlogsByInput(string input)
         {
+            if (input.Length > 50)
+            {
+                throw new ArgumentException("Search must be shorter than 50 characters");
+
+            }
             List<BlogDTO> blogDtos = repository.SearchBlogsByInput(input);
             List<Blog> blogs = blogDtos.Select(dto =>new Blog(dto)).ToList();
             return blogs;
@@ -79,10 +100,42 @@ namespace BusinessLogicLayer.Classes
 
 
         //Edit blog and save
-        public void EditBlog(Blog blog)
+        public ServiceResponce EditBlog(Blog blog)
         {
-            BlogDTO blogDto = new BlogDTO(blog);
-            repository.EditBlog(blogDto);
+            ServiceResponce response = new ServiceResponce();
+
+
+            try
+            {
+                if (blog.Title.Length >= 100 && blog.Title.Length != 0)
+                {
+                    throw new ArgumentException("Title must be shorter than 100 characters");
+                }
+                else if (blog.Text.Length >= 1000 && blog.Text.Length != 0)
+                {
+                    throw new ArgumentException("Blog must be shorter than 1000 characters");
+                }
+                else
+                {
+                    BlogDTO blogDTO = new BlogDTO(blog);
+                    repository.EditBlog(blogDTO);
+                    response.Success = true;
+
+                }
+            }
+            catch (ArgumentException argEx)
+            {
+                response.Success = false;
+                response.ErrorMessage = argEx.Message;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.ErrorMessage = "An unexpected error occurred.";
+            }
+
+            return response;
+
         }
 
         public List<Blog> GetUserBlogs(int? id)

@@ -4,10 +4,11 @@ using BusinessLogicLayer.DTO_s;
 using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Entitys;
 using BusinessLogicLayer.Interfaces;
-using BusinessLogicLayer.Interfaces_Services;
 using DataAccessLayer.Entitys;
+using DataLogicLayer.DaL;
 using DataLogicLayer.Entitys;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Core.Types;
 using S2_mvc.Models;
 using System.Configuration;
 using System.Diagnostics;
@@ -17,21 +18,22 @@ namespace S2_mvc.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IBlogService blogService;
-        private readonly ICategorieService categorieService;
-
-        public HomeController(IBlogService _blogservice, ICategorieService _categorieService)
-        {
-            blogService = _blogservice;
-            categorieService = _categorieService;
-        }
-
         BlogViewModel blogViewModel = new BlogViewModel();
 
+        private readonly BlogService blogService;
+        private readonly CategorieService categorieService;
+
+        public HomeController()
+        {
+            blogService = new BlogService(new BlogRepository()); 
+            categorieService = new CategorieService(new CategorieRepository());
+        }
 
         //Get Blogs admin page
         public IActionResult Blogs()
         {
+            string profile_picture = HttpContext.Session.GetString("ProfilePicURL");
+            blogViewModel.User = new User { profile_picture = profile_picture };
 
             List<Blog> blogs = blogService.GetBlogs();
 
@@ -40,6 +42,10 @@ namespace S2_mvc.Controllers
             List<Categorie> options = categorieService.SetList();
             blogViewModel.categories = options;
 
+            if (TempData["ErrorMessage"] != null)
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+            }
 
             return View(blogViewModel);
         }
@@ -47,8 +53,12 @@ namespace S2_mvc.Controllers
         //SearchBlogs
         public IActionResult SearchBlogs(string input)
         {
-            blogViewModel.SearchList = blogService.SearchBlogsByInput(input);
+            string profile_picture = HttpContext.Session.GetString("ProfilePicURL");
+            string username = HttpContext.Session.GetString("username");
+            blogViewModel.User = new User { profile_picture = profile_picture, Username = username };
 
+
+            blogViewModel.SearchList = blogService.SearchBlogsByInput(input);
 
             List<Categorie> options = categorieService.SetList();
             blogViewModel.categories = options;
@@ -59,6 +69,10 @@ namespace S2_mvc.Controllers
         //Get blogs
         public IActionResult UserBlogs(int? userId)
         {   userId = HttpContext.Session.GetInt32("User_ID");
+            string profile_picture = HttpContext.Session.GetString("ProfilePicURL");
+            string username = HttpContext.Session.GetString("username");
+            blogViewModel.User = new User { profile_picture = profile_picture, Username =  username};
+            
 
             List<Blog> OwnersList = blogService.GetUserBlogs(userId);
 
@@ -70,6 +84,11 @@ namespace S2_mvc.Controllers
 
             List<Categorie> options = categorieService.SetList();
             blogViewModel.categories = options;
+
+            if (TempData["ErrorMessage"] != null)
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+            }
 
             return View(blogViewModel);
         }
@@ -92,13 +111,16 @@ namespace S2_mvc.Controllers
         public IActionResult CreateBlog(Blog blog, int id, int? user_id)
         {
             user_id = HttpContext.Session.GetInt32("User_ID");
-            blogService.CreateBlog(blog, id, user_id);
-
+            var response = blogService.CreateBlog(blog, id, user_id);
+            if (!response.Success)
+            {
+                TempData["ErrorMessage"] = response.ErrorMessage;
+            }
             return RedirectToAction("Blogs");
         }
 
 
-        
+
 
         //Delete blog
         [HttpPost]
@@ -127,13 +149,23 @@ namespace S2_mvc.Controllers
 
             editBlogViewModel.categories = categorieService.SetList();
 
+            if (TempData["ErrorMessage"] != null)
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+            }
+
             return View(editBlogViewModel);
         }
 
         //Save edits on selected blog
         public IActionResult SaveEditBlog(Blog blog)
         {
-            blogService.EditBlog(blog);
+            var response = blogService.EditBlog(blog);
+            if (!response.Success)
+            {
+                TempData["ErrorMessage"] = response.ErrorMessage;
+                return RedirectToAction("UserBlogs");
+            }
             return RedirectToAction("UserBlogs");
         }
 
@@ -143,7 +175,11 @@ namespace S2_mvc.Controllers
         {
             user_id = HttpContext.Session.GetInt32("User_ID");
 
-            blogService.CreateBlog(blog, id, user_id);
+            var response = blogService.CreateBlog(blog, id, user_id);
+            if (!response.Success)
+            {
+                TempData["ErrorMessage"] = response.ErrorMessage;
+            }
             return RedirectToAction("UserBlogs");
         }
 

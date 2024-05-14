@@ -20,6 +20,7 @@ namespace DataLogicLayer.Entitys
             CategoryTitle = blogDto.CategoryTitle;
             Date = blogDto.Date;
             Username = blogDto.Username;
+            profile_picture = blogDto.profile_picture;
         }
 
         public int Id { get; set; }
@@ -28,6 +29,8 @@ namespace DataLogicLayer.Entitys
         public string CategoryTitle { get; set; }
         public string Username { get; set; }        
         public string Date {  get; set; }
+
+        public string profile_picture { get; set; }
 
     }
 }

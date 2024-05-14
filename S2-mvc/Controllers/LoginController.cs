@@ -1,11 +1,11 @@
 ﻿using BusinessLogicLayer.Classes;
 using BusinessLogicLayer.Interfaces;
-using BusinessLogicLayer.Interfaces_Services;
 using Microsoft.AspNetCore.Mvc;
 using MySqlX.XDevAPI;
 
 using Microsoft.AspNetCore.Http; 
-using Microsoft.AspNetCore.Session; 
+using Microsoft.AspNetCore.Session;
+using DataAccessLayer.DaL;
 
 
 
@@ -14,21 +14,24 @@ namespace S2_mvc.Controllers
     public class LoginController : Controller
     {
 
-        private readonly ILoginService loginService;
+        private readonly LoginService loginService;
 
-        public LoginController(ILoginService _loginService)
+        public LoginController()
         {
-            loginService = _loginService;
+            loginService = new LoginService(new LoginRepository());
         }
+
 
         //Login
         public IActionResult Login(string username, string password)
         {
-            var (loginSuccessful, userId) = loginService.Login(username, password);
+            var (loginSuccessful, userId, profilePictureURL) = loginService.Login(username, password);
 
             if (loginSuccessful)
             {
                 HttpContext.Session.SetInt32("User_ID", userId);
+                HttpContext.Session.SetString("username", username);
+                HttpContext.Session.SetString("ProfilePicURL", profilePictureURL);
 
                 bool admin = loginService.CheckRole(username, password);
                 if (admin)
@@ -51,6 +54,13 @@ namespace S2_mvc.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
+
+
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
 
         public IActionResult Index()
         {

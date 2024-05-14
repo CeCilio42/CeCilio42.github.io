@@ -1,5 +1,4 @@
 ﻿using BusinessLogicLayer.Interfaces;
-using BusinessLogicLayer.Interfaces_Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Classes
 {
-    public class LoginService : ILoginService
+    public class LoginService
     {
         private readonly ILoginRepository loginRepository;
 
@@ -18,7 +17,7 @@ namespace BusinessLogicLayer.Classes
             this.loginRepository = loginRepository;
         }
 
-        public (bool, int) Login(string username, string password)
+        public (bool, int, string) Login(string username, string password)
         {
             return loginRepository.Login(username, password);
         }

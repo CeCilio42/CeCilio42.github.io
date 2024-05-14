@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.DTO_s;
+using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entitys;
 using DataLogicLayer.Entitys;
 using MySql.Data.MySqlClient;
@@ -12,9 +13,9 @@ namespace DataAccessLayer.DaL
 {
     public class LoginRepository : ILoginRepository
     {
-        public (bool, int) Login(string username, string password)
+        public (bool, int, string) Login(string username, string password)
         {
-            string queryLogin = "SELECT id FROM users WHERE username = @Username AND password = @Password;";
+            string queryLogin = "SELECT id, profile_picture FROM users WHERE username = @Username AND password = @Password;";
             try
             {
                 using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
@@ -24,15 +25,20 @@ namespace DataAccessLayer.DaL
                     {
                         cmd.Parameters.AddWithValue("@Username", username);
                         cmd.Parameters.AddWithValue("@Password", password);
-                        var result = cmd.ExecuteScalar();
 
-                        if (result != null)
+                        using (MySqlDataReader dataReader = cmd.ExecuteReader())
                         {
-                            return (true, Convert.ToInt32(result));
-                        }
-                        else
-                        {
-                            return (false, 0);
+                            if (dataReader.Read())
+                            {
+                                int userId = Convert.ToInt32(dataReader["id"]);
+                                string profilePictureUrl = dataReader["profile_picture"].ToString();
+
+                                return (true, userId, profilePictureUrl);
+                            }
+                            else
+                            {
+                                return (false, 0, null); 
+                            }
                         }
                     }
                 }
@@ -40,12 +46,12 @@ namespace DataAccessLayer.DaL
             catch (MySqlException ex)
             {
                 Console.WriteLine("Database error: " + ex.Message);
-                return (false, 0);
+                return (false, 0, null);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
-                return (false, 0);
+                return (false, 0, null);
             }
         }
 
