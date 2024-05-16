@@ -3,6 +3,7 @@ using BusinessLogicLayer.Classes;
 using BusinessLogicLayer.DTO_s;
 using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Entitys;
+using BusinessLogicLayer.Errors;
 using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entitys;
 using DataLogicLayer.DaL;
@@ -34,13 +35,22 @@ namespace S2_mvc.Controllers
         {
             string profile_picture = HttpContext.Session.GetString("ProfilePicURL");
             blogViewModel.User = new User { profile_picture = profile_picture };
+            try
+            {
+                List<Blog> blogs = blogService.GetBlogs();
+                blogViewModel.BlogList = blogs;
 
-            List<Blog> blogs = blogService.GetBlogs();
+                List<Categorie> options = categorieService.SetList();
+                blogViewModel.categories = options;
 
-            blogViewModel.BlogList = blogs;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Error");
+            }
 
-            List<Categorie> options = categorieService.SetList();
-            blogViewModel.categories = options;
+
 
             if (TempData["ErrorMessage"] != null)
             {
@@ -57,38 +67,72 @@ namespace S2_mvc.Controllers
             string username = HttpContext.Session.GetString("username");
             blogViewModel.User = new User { profile_picture = profile_picture, Username = username };
 
+            try
+            {
+                blogViewModel.SearchList = blogService.SearchBlogsByInput(input);
 
-            blogViewModel.SearchList = blogService.SearchBlogsByInput(input);
 
-            List<Categorie> options = categorieService.SetList();
-            blogViewModel.categories = options;
+                List<Categorie> options = categorieService.SetList();
+                blogViewModel.categories = options;
 
-            return View(blogViewModel);
+                return View(blogViewModel);
+            }
+            catch(CustomUserFriendlyException ex)
+            {
+                blogViewModel.SearchList = blogService.SearchBlogsByInput(input);
+
+
+                List<Categorie> options = categorieService.SetList();
+                blogViewModel.categories = options;
+
+                if (TempData["ErrorMessage"] != null)
+                {
+                    ViewBag.ErrorMessage = ex.Message;
+                }
+
+                return View(blogViewModel);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+
+
         }
 
         //Get blogs
         public IActionResult UserBlogs(int? userId)
-        {   userId = HttpContext.Session.GetInt32("User_ID");
-            string profile_picture = HttpContext.Session.GetString("ProfilePicURL");
-            string username = HttpContext.Session.GetString("username");
-            blogViewModel.User = new User { profile_picture = profile_picture, Username =  username};
-            
-
-            List<Blog> OwnersList = blogService.GetUserBlogs(userId);
-
-            blogViewModel.OwnersList = OwnersList;
-            blogViewModel.BlogList = blogService.GetBlogs();
-
-            blogViewModel.BlogList.RemoveAll(blog => OwnersList.Any(ownerblog => ownerblog.Id == blog.Id));
-
-
-            List<Categorie> options = categorieService.SetList();
-            blogViewModel.categories = options;
-
-            if (TempData["ErrorMessage"] != null)
+        {
+            try
             {
-                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+                userId = HttpContext.Session.GetInt32("User_ID");
+                string profile_picture = HttpContext.Session.GetString("ProfilePicURL");
+                string username = HttpContext.Session.GetString("username");
+                blogViewModel.User = new User { profile_picture = profile_picture, Username = username };
+
+
+                List<Blog> OwnersList = blogService.GetUserBlogs(userId);
+
+                blogViewModel.OwnersList = OwnersList;
+                blogViewModel.BlogList = blogService.GetBlogs();
+
+                blogViewModel.BlogList.RemoveAll(blog => OwnersList.Any(ownerblog => ownerblog.Id == blog.Id));
+
+
+                List<Categorie> options = categorieService.SetList();
+                blogViewModel.categories = options;
+
+                if (TempData["ErrorMessage"] != null)
+                {
+                    ViewBag.ErrorMessage = TempData["ErrorMessage"];
+                }
+
             }
+            catch (CustomUserFriendlyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch { return StatusCode(500); }
 
             return View(blogViewModel);
         }
@@ -110,13 +154,21 @@ namespace S2_mvc.Controllers
         [HttpPost]
         public IActionResult CreateBlog(Blog blog, int id, int? user_id)
         {
-            user_id = HttpContext.Session.GetInt32("User_ID");
-            var response = blogService.CreateBlog(blog, id, user_id);
-            if (!response.Success)
+            try
             {
-                TempData["ErrorMessage"] = response.ErrorMessage;
+                user_id = HttpContext.Session.GetInt32("User_ID");
+                var response = blogService.CreateBlog(blog, id, user_id);
+                if (!response.Success)
+                {
+                    TempData["ErrorMessage"] = response.ErrorMessage;
+                }
+                return RedirectToAction("Blogs");
             }
-            return RedirectToAction("Blogs");
+            catch (CustomUserFriendlyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch { return StatusCode(500); }
         }
 
 
@@ -126,61 +178,104 @@ namespace S2_mvc.Controllers
         [HttpPost]
         public IActionResult DeleteBlog(int id)
         {
-            blogService.DeleteBlog(id);
+            try
+            {
+                blogService.DeleteBlog(id);
 
-            return RedirectToAction("Blogs");
+                return RedirectToAction("Blogs");
+            }
+            catch (CustomUserFriendlyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch { return StatusCode(500); }
         }
 
         //Delete blog
         [HttpPost]
         public IActionResult DeleteBlogUser(int id)
         {
-            blogService.DeleteBlog(id);
+            try
+            {
+                blogService.DeleteBlog(id);
 
-            return RedirectToAction("UserBlogs");
+                return RedirectToAction("UserBlogs");
+            }
+            catch (CustomUserFriendlyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch { return StatusCode(500); }
         }
 
         //Get selected blog for edit
         public IActionResult EditBlog(int id)
         {
-            EditBlogViewModel editBlogViewModel = new EditBlogViewModel();
-
-            editBlogViewModel.blog = blogService.GetBlogById(id);
-
-            editBlogViewModel.categories = categorieService.SetList();
-
-            if (TempData["ErrorMessage"] != null)
+            try
             {
-                ViewBag.ErrorMessage = TempData["ErrorMessage"];
-            }
+                EditBlogViewModel editBlogViewModel = new EditBlogViewModel();
 
-            return View(editBlogViewModel);
+                editBlogViewModel.blog = blogService.GetBlogById(id);
+
+                editBlogViewModel.categories = categorieService.SetList();
+
+                if (TempData["ErrorMessage"] != null)
+                {
+                    ViewBag.ErrorMessage = TempData["ErrorMessage"];
+                }
+
+                return View(editBlogViewModel);
+            }
+            catch (CustomUserFriendlyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch { return StatusCode(500); }
+
         }
 
         //Save edits on selected blog
         public IActionResult SaveEditBlog(Blog blog)
         {
-            var response = blogService.EditBlog(blog);
-            if (!response.Success)
+            try
             {
-                TempData["ErrorMessage"] = response.ErrorMessage;
+                var response = blogService.EditBlog(blog);
+                if (!response.Success)
+                {
+                    TempData["ErrorMessage"] = response.ErrorMessage;
+                    return RedirectToAction("UserBlogs");
+                }
                 return RedirectToAction("UserBlogs");
             }
-            return RedirectToAction("UserBlogs");
+            catch (CustomUserFriendlyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch { return StatusCode(500); }
+
         }
 
 
         [HttpPost]
         public IActionResult CreateBlogUser(Blog blog, int id, int? user_id)
         {
-            user_id = HttpContext.Session.GetInt32("User_ID");
-
-            var response = blogService.CreateBlog(blog, id, user_id);
-            if (!response.Success)
+            try
             {
-                TempData["ErrorMessage"] = response.ErrorMessage;
+                user_id = HttpContext.Session.GetInt32("User_ID");
+
+                var response = blogService.CreateBlog(blog, id, user_id);
+                if (!response.Success)
+                {
+                    TempData["ErrorMessage"] = response.ErrorMessage;
+                }
+                return RedirectToAction("UserBlogs");
             }
-            return RedirectToAction("UserBlogs");
+            catch (CustomUserFriendlyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch { return StatusCode(500); }
+
         }
 
 

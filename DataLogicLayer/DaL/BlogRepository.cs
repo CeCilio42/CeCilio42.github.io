@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.DTO_s;
 using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Entitys;
+using BusinessLogicLayer.Errors;
 using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entitys;
 using DataLogicLayer;
@@ -79,6 +80,7 @@ namespace BusinessLogicLayer
 
         public List<BlogDTO> SearchBlogsByInput(string input)
         {
+
             List<BlogDTO> blogs = new List<BlogDTO>();
             string query = "SELECT b.id, b.title, b.text, b.date, u.username, u.profile_picture, c.title " +
                            "AS categorie_title FROM blog b " +
@@ -113,17 +115,23 @@ namespace BusinessLogicLayer
 
                     dataReader.Close();
                 }
+
+                if (blogs.Count == 0)
+                {
+                    throw new NoBlogsFoundException("No blogs found for the given input.");
+                }
+
+                return blogs;
             }
-            catch (Exception ex)
+            catch (NoBlogsFoundException ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw;
             }
             finally
             {
                 connection.CloseConnection();
             }
 
-            return blogs;
         }
 
 
@@ -138,7 +146,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+                using (var connection = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi533837;Database=dbi533837;Pwd=Iqx1F6WrNs"))
                 {
                     connection.Open();
                     using (var cmd = new MySqlCommand(queryBlog, connection))
@@ -157,13 +165,10 @@ namespace BusinessLogicLayer
                     }
                 }
             }
-            catch (MySqlException ex)
+            catch (QueryDatabaseException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred: " + ex.Message);
+
             }
 
             connection.CloseConnection();
@@ -179,7 +184,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+                using (var connection = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi533837;Database=dbi533837;Pwd=Iqx1F6WrNs"))
                 {
                     connection.Open();
                     using (var cmd = new MySqlCommand(queryDeleteBlogCategorie, connection))
@@ -194,13 +199,13 @@ namespace BusinessLogicLayer
                     }
                 }
             }
-            catch (MySqlException ex)
+            catch (QueryDatabaseException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred: " + ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred: " + ex.Message);
             }
             finally
             {
@@ -217,7 +222,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+                using (var connection = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi533837;Database=dbi533837;Pwd=Iqx1F6WrNs"))
                 {
                     connection.Open();
                     using (var cmd = new MySqlCommand(query, connection))
@@ -236,13 +241,13 @@ namespace BusinessLogicLayer
                     }
                 }
             }
-            catch (MySqlException ex)
+            catch (QueryDatabaseException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred: " + ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred: " + ex.Message);
             }
             finally
             {
@@ -259,7 +264,7 @@ namespace BusinessLogicLayer
             string query = "UPDATE blog SET Title = @Title, Text = @Text WHERE Id = @BlogId;";
             try
             {
-                using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+                using (var connection = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi533837;Database=dbi533837;Pwd=Iqx1F6WrNs"))
                 {
                     connection.Open();
                     using (var cmd = new MySqlCommand(query, connection))
@@ -271,13 +276,13 @@ namespace BusinessLogicLayer
                     }
                 }
             }
-            catch (MySqlException ex)
+            catch (QueryDatabaseException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred: " + ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred: " + ex.Message);
             }
 
             connection.CloseConnection();
@@ -320,9 +325,13 @@ namespace BusinessLogicLayer
                     dataReader.Close();
                 }
             }
+            catch (QueryDatabaseException ex)
+            {
+                throw new QueryDatabaseException("An error occurred: " + ex.Message);
+            }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw new Exception(ex.Message);
             }
             finally
             {

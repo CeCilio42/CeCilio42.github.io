@@ -38,11 +38,11 @@ namespace DataLogicLayer.DaL
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
+                throw new ArgumentException("An error occurred: " + ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw new ArgumentException("An error occurred: " + ex.Message);
             }
             
             connection.CloseConnection();
@@ -56,7 +56,7 @@ namespace DataLogicLayer.DaL
 
             try
             {
-                using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+                using (var connection = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi533837;Database=dbi533837;Pwd=Iqx1F6WrNs"))
                 {
                     connection.Open();
                     using (var cmd = new MySqlCommand(queryCreateCategory, connection))
@@ -68,11 +68,11 @@ namespace DataLogicLayer.DaL
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
+                throw new ArgumentException("An error occurred: " + ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw new ArgumentException("An error occurred: " + ex.Message);
             }
 
             connection.CloseConnection();
@@ -86,7 +86,7 @@ namespace DataLogicLayer.DaL
 
             try
             {
-                using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+                using (var connection = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi533837;Database=dbi533837;Pwd=Iqx1F6WrNs"))
                 {
                     connection.Open();
                     using (var cmd = new MySqlCommand(queryEditCategory, connection))
@@ -99,11 +99,12 @@ namespace DataLogicLayer.DaL
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
+                throw new ArgumentException("An error occurred: " + ex.Message);
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw new ArgumentException("An error occurred: " + ex.Message);
             }
 
             connection.CloseConnection();

@@ -25,7 +25,7 @@ namespace BusinessLogicLayer.Classes
 
         //Get All BlogsDTOs
         public List<Blog> GetBlogs()
-        {   
+        {
             List<BlogDTO> blogDtos = repository.GetBlogs();
             List<Blog> blogs = blogDtos.Select(dto => new Blog(dto)).ToList();
             return blogs;
@@ -74,12 +74,24 @@ namespace BusinessLogicLayer.Classes
         {
             if (input.Length > 50)
             {
-                throw new ArgumentException("Search must be shorter than 50 characters");
-
+                throw new CustomUserFriendlyException("Search must be shorter than 50 characters");
             }
-            List<BlogDTO> blogDtos = repository.SearchBlogsByInput(input);
-            List<Blog> blogs = blogDtos.Select(dto =>new Blog(dto)).ToList();
-            return blogs;
+
+            try
+            {
+                List<BlogDTO> blogDtos = repository.SearchBlogsByInput(input);
+                List<Blog> blogs = blogDtos.Select(dto => new Blog(dto)).ToList();
+                return blogs;
+            }
+            catch (NoBlogsFoundException ex)
+            {
+                throw new CustomUserFriendlyException(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+
             
         }
 
@@ -87,14 +99,30 @@ namespace BusinessLogicLayer.Classes
         //Delete Blog
         public void DeleteBlog(int blogId)
         {
-            repository.DeleteBlogs(blogId);
+            try
+            {
+                repository.DeleteBlogs(blogId);
+            }
+            catch (QueryDatabaseException ex)
+            {
+                throw new CustomUserFriendlyException("A program error occurred. Please contact admin" + ex.Message);
+            }
+
         }
 
         //Get selected blog for edit
         public Blog GetBlogById(int id)
         {
-            BlogDTO blogDto = repository.GetBlogById(id);
-            return new Blog(blogDto);
+            try
+            {
+                BlogDTO blogDto = repository.GetBlogById(id);
+                return new Blog(blogDto);
+            }
+            catch(QueryDatabaseException ex)
+            {
+                throw new CustomUserFriendlyException ("A program error occurred. Please contact admin" + ex.Message);
+            }
+
         }
 
 
@@ -140,9 +168,19 @@ namespace BusinessLogicLayer.Classes
 
         public List<Blog> GetUserBlogs(int? id)
         {
-            List<BlogDTO> blogDtos = repository.GetUserBlogs(id);
-            List<Blog> blogs = blogDtos.Select(dto => new Blog(dto)).ToList();
-            return blogs;
+            try
+            {
+                List<BlogDTO> blogDtos = repository.GetUserBlogs(id);
+                List<Blog> blogs = blogDtos.Select(dto => new Blog(dto)).ToList();
+                return blogs;
+            }
+            catch (QueryDatabaseException ex) 
+            { 
+                throw new CustomUserFriendlyException("A program error occurred. Please contact admin" + ex.Message);
+            }
+
+
+
 
         }
 

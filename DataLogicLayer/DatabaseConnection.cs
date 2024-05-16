@@ -24,12 +24,8 @@ namespace DataLogicLayer
       
         private void Initialize()
         {
-            server = "127.0.0.1";
-            database = "blog database";
-            uid = "root";
-            password = "";
             string connectionString;
-            connectionString = $"SERVER={server};DATABASE={database};UID={uid};PASSWORD={password};";
+            connectionString = $"SERVER=studmysql01.fhict.local;DATABASE=dbi533837;UID=dbi533837;PASSWORD=Iqx1F6WrNs;";
 
             connection = new MySqlConnection(connectionString);
         }

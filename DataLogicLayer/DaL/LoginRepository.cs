@@ -18,7 +18,7 @@ namespace DataAccessLayer.DaL
             string queryLogin = "SELECT id, profile_picture FROM users WHERE username = @Username AND password = @Password;";
             try
             {
-                using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+                using (var connection = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi533837;Database=dbi533837;Pwd=Iqx1F6WrNs"))
                 {
                     connection.Open();
                     using (var cmd = new MySqlCommand(queryLogin, connection))
@@ -45,12 +45,14 @@ namespace DataAccessLayer.DaL
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
+                throw new ArgumentException("An error occurred: " + ex.Message);
+
                 return (false, 0, null);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw new ArgumentException("An error occurred: " + ex.Message);
+
                 return (false, 0, null);
             }
         }
@@ -63,7 +65,7 @@ namespace DataAccessLayer.DaL
 
             try
             {
-                using (var connection = new MySqlConnection("SERVER=127.0.0.1;DATABASE=blog database;UID=root;PASSWORD="))
+                using (var connection = new MySqlConnection("Server=studmysql01.fhict.local;Uid=dbi533837;Database=dbi533837;Pwd=Iqx1F6WrNs"))
                 {
                     connection.Open();
                     using (var cmd = new MySqlCommand(queryLogin, connection))
@@ -85,12 +87,14 @@ namespace DataAccessLayer.DaL
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine("Database error: " + ex.Message);
+                throw new ArgumentException("An error occurred: " + ex.Message);
+
                 return false;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                throw new ArgumentException("An error occurred: " + ex.Message);
+
                 return false;
             }
         }
