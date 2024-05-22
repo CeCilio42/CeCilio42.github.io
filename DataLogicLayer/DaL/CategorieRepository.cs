@@ -1,5 +1,6 @@
 ﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Entitys;
+using BusinessLogicLayer.Errors;
 using BusinessLogicLayer.Interfaces;
 using MySql.Data.MySqlClient;
 
@@ -36,13 +37,13 @@ namespace DataLogicLayer.DaL
                     connection.CloseConnection();
                 }
             }
-            catch (MySqlException ex)
+            catch (QueryDatabaseException ex)
             {
-                throw new ArgumentException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
             
             connection.CloseConnection();
@@ -66,13 +67,13 @@ namespace DataLogicLayer.DaL
                     }
                 }
             }
-            catch (MySqlException ex)
+            catch (QueryDatabaseException ex)
             {
-                throw new ArgumentException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
 
             connection.CloseConnection();
@@ -97,14 +98,14 @@ namespace DataLogicLayer.DaL
                     }
                 }
             }
-            catch (MySqlException ex)
+            catch (QueryDatabaseException ex)
             {
-                throw new ArgumentException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
 
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
 
             connection.CloseConnection();

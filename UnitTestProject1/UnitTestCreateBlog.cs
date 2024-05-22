@@ -10,7 +10,7 @@ namespace UnitTestProject1
         public void BlogRightProperties_CreateBlog_AddBlogIsTrue()
         {
             //add blog properties
-
+            
             //add blog to program
 
             //check the output

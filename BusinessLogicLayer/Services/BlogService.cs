@@ -54,15 +54,10 @@ namespace BusinessLogicLayer.Classes
                     response.Success = true;
                 
             }
-            catch (ArgumentException argEx)
+            catch (CustomUserFriendlyException ex)
             {
                 response.Success = false;
-                response.ErrorMessage = argEx.Message;
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.ErrorMessage = "An unexpected error occurred.";
+                response.ErrorMessage = "A program error occurred. Please contact admin: " + ex.Message;
             }
 
             return response;
@@ -151,15 +146,10 @@ namespace BusinessLogicLayer.Classes
 
                 }
             }
-            catch (ArgumentException argEx)
+            catch (CustomUserFriendlyException argEx)
             {
                 response.Success = false;
-                response.ErrorMessage = argEx.Message;
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.ErrorMessage = "An unexpected error occurred.";
+                response.ErrorMessage = "A program error occurred.Please contact admin" + argEx.Message;
             }
 
             return response;

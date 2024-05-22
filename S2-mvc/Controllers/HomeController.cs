@@ -24,10 +24,10 @@ namespace S2_mvc.Controllers
         private readonly BlogService blogService;
         private readonly CategorieService categorieService;
 
-        public HomeController()
+        public HomeController(BlogService blogRepository, ICategoryRepository categoryRepository)
         {
-            blogService = new BlogService(new BlogRepository()); 
-            categorieService = new CategorieService(new CategorieRepository());
+            blogService = blogRepository; 
+            categorieService = new CategorieService(categoryRepository);
         }
 
         //Get Blogs admin page
@@ -79,18 +79,7 @@ namespace S2_mvc.Controllers
             }
             catch(CustomUserFriendlyException ex)
             {
-                blogViewModel.SearchList = blogService.SearchBlogsByInput(input);
-
-
-                List<Categorie> options = categorieService.SetList();
-                blogViewModel.categories = options;
-
-                if (TempData["ErrorMessage"] != null)
-                {
-                    ViewBag.ErrorMessage = ex.Message;
-                }
-
-                return View(blogViewModel);
+                return BadRequest(ex.Message);
             }
             catch (Exception)
             {

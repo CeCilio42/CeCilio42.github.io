@@ -18,16 +18,17 @@
         }
 
         .error-message {
-            position: fixed; /* Fixed position */
-            top: 20px; /* Distance from the top */
-            right: 20px; /* Distance from the right */
-            background-color: #f44336; /* Red background color */
-            color: white; /* White text color */
-            padding: 12px 24px; /* Padding around the text */
+            padding: 20px;
             z-index: 1000; /* High z-index to float above other elements */
-            border-radius: 4px; /* Rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for better visibility */
+            position: fixed; /* Fixed position */
+            top: 40px; /* Distance from the top */
+            right: 90px; /* Distance from the right */
+            border-radius: 6px;
+            color: #ba3939;
+            background: #ac8f8f;
+            border: 1px solid #a33a3a;
         }
+
 
         .topbar {
             width: 100%;
@@ -324,12 +325,12 @@
         {
             <div class="blog-post">
                 <div class="blog-title">@blog.Title</div>
-                <img src="@blog.profile_picture">
+                <img src="@blog.ProfilePicture">
                 <div class="blog-username">Posted by @blog.Username</div>
                 <div class="blog-text">
                     @blog.Text
                 </div>
-                <div class="blog-category">Category: @blog.CategoryTitle</div>
+                <div class="blog-category">Category: @blog.categorieTitle</div>
                 <div class="blog-buttons">
                     <form action="DeleteBlogUser" method="post">
                         <input type="hidden" name="Id" value="@blog.Id">

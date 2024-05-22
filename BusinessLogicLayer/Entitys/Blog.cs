@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.DTO_s;
+using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Entitys;
 using DataAccessLayer.Entitys;
 using System;
@@ -17,20 +18,25 @@ namespace DataLogicLayer.Entitys
             Id = blogDto.id;
             Title = blogDto.Name;
             Text = blogDto.Description;
-            CategoryTitle = blogDto.CategoryTitle;
+            categorieTitle = blogDto.CategoryName;
             Date = blogDto.Date;
             Username = blogDto.Username;
-            profile_picture = blogDto.profile_picture;
+            ProfilePicture = blogDto.ProfilePicture;
         }
 
         public int Id { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
-        public string CategoryTitle { get; set; }
-        public string Username { get; set; }        
-        public string Date {  get; set; }
 
-        public string profile_picture { get; set; }
+        public string Date {  get; set; }
+        public string categorieTitle {  get; set; }
+        public string Username { get; set; }
+        public string ProfilePicture { get; set; }
+
+        public User user { get; set; }
+
+        public Categorie categorie { get; set; }
+
 
     }
 }

@@ -53,10 +53,10 @@ namespace BusinessLogicLayer
                         blogDTO.id = Convert.ToInt32(dataReader["id"]);
                         blogDTO.Name = dataReader["title"].ToString();
                         blogDTO.Description = dataReader["text"].ToString();
-                        blogDTO.CategoryTitle = dataReader["categorie_title"].ToString();
+                        blogDTO.CategoryName = dataReader["categorie_title"].ToString();
                         blogDTO.Date = dataReader["date"].ToString();
                         blogDTO.Username = dataReader["username"].ToString();
-                        blogDTO.profile_picture = dataReader["profile_picture"].ToString();
+                        blogDTO.ProfilePicture = dataReader["profile_picture"].ToString();
 
                         blogs.Add(blogDTO);
                     }
@@ -64,10 +64,9 @@ namespace BusinessLogicLayer
                     dataReader.Close();
                 }
             }
-            catch (Exception ex)
+            catch (QueryDatabaseException ex)
             {
-                //new EventHandler(, ex);
-                Console.WriteLine("An error occured: " + ex);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex);
             }
             finally
             {
@@ -105,10 +104,10 @@ namespace BusinessLogicLayer
                         blogDTO.id = Convert.ToInt32(dataReader["id"]);
                         blogDTO.Name = dataReader["title"].ToString();
                         blogDTO.Description = dataReader["text"].ToString();
-                        blogDTO.CategoryTitle = dataReader["categorie_title"].ToString();
+                        blogDTO.CategoryName = dataReader["categorie_title"].ToString();
                         blogDTO.Date = dataReader["date"].ToString();
                         blogDTO.Username = dataReader["username"].ToString();
-                        blogDTO.profile_picture = dataReader["profile_picture"].ToString();
+                        blogDTO.ProfilePicture = dataReader["profile_picture"].ToString();
 
                         blogs.Add(blogDTO);
                     }
@@ -167,7 +166,7 @@ namespace BusinessLogicLayer
             }
             catch (QueryDatabaseException ex)
             {
-                throw new QueryDatabaseException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
 
             }
 
@@ -201,11 +200,11 @@ namespace BusinessLogicLayer
             }
             catch (QueryDatabaseException ex)
             {
-                throw new QueryDatabaseException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
             catch (Exception ex)
             {
-                throw new QueryDatabaseException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
             finally
             {
@@ -243,11 +242,11 @@ namespace BusinessLogicLayer
             }
             catch (QueryDatabaseException ex)
             {
-                throw new QueryDatabaseException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
             catch (Exception ex)
             {
-                throw new QueryDatabaseException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
             finally
             {
@@ -278,11 +277,11 @@ namespace BusinessLogicLayer
             }
             catch (QueryDatabaseException ex)
             {
-                throw new QueryDatabaseException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
             catch (Exception ex)
             {
-                throw new QueryDatabaseException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
 
             connection.CloseConnection();
@@ -316,8 +315,8 @@ namespace BusinessLogicLayer
                         blogDTO.id = Convert.ToInt32(dataReader["id"]);
                         blogDTO.Name = dataReader["title"].ToString();
                         blogDTO.Description = dataReader["text"].ToString();
-                        blogDTO.CategoryTitle = dataReader["categorie_title"].ToString();
-                        blogDTO.profile_picture = dataReader["profile_picture"].ToString();
+                        blogDTO.CategoryName = dataReader["categorie_title"].ToString();
+                        blogDTO.ProfilePicture = dataReader["profile_picture"].ToString();
 
                         blogs.Add(blogDTO);
                     }
@@ -327,7 +326,7 @@ namespace BusinessLogicLayer
             }
             catch (QueryDatabaseException ex)
             {
-                throw new QueryDatabaseException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
             }
             catch (Exception ex)
             {

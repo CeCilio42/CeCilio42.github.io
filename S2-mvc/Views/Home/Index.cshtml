@@ -17,6 +17,19 @@
             background-color: grey;
         }
 
+
+        .error-message {
+            padding: 20px;
+            z-index: 1000; /* High z-index to float above other elements */
+            position: fixed; /* Fixed position */
+            top: 40px; /* Distance from the top */
+            right: 90px; /* Distance from the right */
+            border-radius: 6px;
+            color: #ba3939;
+            background: #ac8f8f;
+            border: 1px solid #a33a3a;
+        }
+
         .container {
             background-color: #333; /* Dark background for the container */
             color: #f1f1f1; /* Light text color for contrast */
@@ -67,6 +80,14 @@
     </style>
 </head>
 <body>
+
+        @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="error-message">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
     <div class="container">
         <h1>Login</h1>
         <form action="/Login/Login" method="post">

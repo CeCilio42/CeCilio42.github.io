@@ -11,14 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
-//builder.Services.AddScoped<IBlogRepository, BlogRepository>();
-//builder.Services.AddScoped<BlogService>();
+builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddScoped<BlogService>();
 
-//builder.Services.AddScoped<ICategoryRepository, CategorieRepository>();
-//builder.Services.AddScoped<CategorieService>();
+builder.Services.AddScoped<ICategoryRepository, CategorieRepository>();
+builder.Services.AddScoped<CategorieService>();
 
-//builder.Services.AddScoped<ILoginRepository, LoginRepository>();
-//builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+builder.Services.AddScoped<LoginService>();
 
 
 builder.Services.AddDistributedMemoryCache();

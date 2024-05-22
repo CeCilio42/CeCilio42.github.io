@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.DTO_s;
+using BusinessLogicLayer.Errors;
 using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entitys;
 using DataLogicLayer.Entitys;
@@ -43,15 +44,15 @@ namespace DataAccessLayer.DaL
                     }
                 }
             }
-            catch (MySqlException ex)
+            catch (QueryDatabaseException ex)
             {
-                throw new ArgumentException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
 
                 return (false, 0, null);
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("An error occurred: " + ex.Message);
+                throw new ArgumentException("An error occurred in the repository: " + ex.Message);
 
                 return (false, 0, null);
             }
@@ -85,15 +86,15 @@ namespace DataAccessLayer.DaL
                     }
                 }
             }
-            catch (MySqlException ex)
+            catch (QueryDatabaseException ex)
             {
-                throw new ArgumentException("An error occurred: " + ex.Message);
+                throw new QueryDatabaseException("An error occurred in the repository: " + ex.Message);
 
                 return false;
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("An error occurred: " + ex.Message);
+                throw new ArgumentException("An error occurred in the repository: " + ex.Message);
 
                 return false;
             }

@@ -16,9 +16,17 @@
     }
 
     .error-message {
-        color: red;
-        font-weight: bold;
+        padding: 20px;
+        z-index: 1000; /* High z-index to float above other elements */
+        position: fixed; /* Fixed position */
+        top: 40px; /* Distance from the top */
+        right: 90px; /* Distance from the right */
+        border-radius: 6px;
+        color: #ba3939;
+        background: #ac8f8f;
+        border: 1px solid #a33a3a;
     }
+
 
     :root {
         --sidebar-width: 250px;

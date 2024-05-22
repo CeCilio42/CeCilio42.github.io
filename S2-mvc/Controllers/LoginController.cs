@@ -45,6 +45,7 @@ namespace S2_mvc.Controllers
             }
             else
             {
+                ViewBag.Errormessage = "Wrong username or password";
                 return RedirectToAction("Index", "Home");
             }
         }
