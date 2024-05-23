@@ -14,11 +14,12 @@ namespace S2_mvcUnitTest.FakeDaL
 
         public FakeLoginRepo()
         {
-            users = new List<User>
-        {
-            new User { Id = 1, Username = "admin", Password = "password", role = "admin", profile_picture = "123" },
-            new User { Id = 2, Username = "user", Password = "password", role = "user", profile_picture = "123" }
-        };
+            users = new List<User>();
+
+
+            users.Add(new User { Id = 1, Username = "admin", Password = "password", role = "admin", profile_picture = "123" });
+            users.Add(new User { Id = 2, Username = "user", Password = "password", role = "user", profile_picture = "123" });
+            
         }
 
         public (bool, int, string) Login(string username, string password)

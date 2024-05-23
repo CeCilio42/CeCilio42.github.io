@@ -117,6 +117,11 @@ namespace S2_mvcUnitTest.FakeDaL
                 {
                     blogToDelete = blog;
                 }
+                else if (blogToDelete == null)
+                {
+                    throw new Exception("No blog found with id");
+                }
+
             }
 
             if (blogToDelete != null)
@@ -134,6 +139,10 @@ namespace S2_mvcUnitTest.FakeDaL
                 if (blog.id > newId)
                 {
                     newId = blog.id;
+                }
+                else
+                {
+                    throw new Exception("No blog made with corresponding Id");
                 }
             }
 
