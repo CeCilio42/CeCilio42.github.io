@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace BusinessLogicLayer.Classes
 {
@@ -18,10 +19,12 @@ namespace BusinessLogicLayer.Classes
 
         private readonly IBlogRepository repository;
 
+
         public BlogService(IBlogRepository repo)
         {
             repository = repo;
         }
+
 
         //Get All BlogsDTOs
         public List<Blog> GetBlogs()

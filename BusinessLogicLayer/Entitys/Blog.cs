@@ -12,16 +12,21 @@ namespace DataLogicLayer.Entitys
 {
     public class Blog
     {
-        public Blog() { }
-        public Blog(BlogDTO blogDto)
+        public Blog()
+        {
+            user = new User();
+            categorie = new Categorie();
+        }
+
+        public Blog(BlogDTO blogDto) : this()
         {
             Id = blogDto.id;
             Title = blogDto.Name;
             Text = blogDto.Description;
-            categorieTitle = blogDto.CategoryName;
+            categorie.Title = blogDto.categorie?.Name;
             Date = blogDto.Date;
-            Username = blogDto.Username;
-            ProfilePicture = blogDto.ProfilePicture;
+            user.Username = blogDto.user?.Username;
+            user.profile_picture = blogDto.user?.profile_picture;
         }
 
         public int Id { get; set; }
@@ -29,9 +34,6 @@ namespace DataLogicLayer.Entitys
         public string Text { get; set; }
 
         public string Date {  get; set; }
-        public string categorieTitle {  get; set; }
-        public string Username { get; set; }
-        public string ProfilePicture { get; set; }
 
         public User user { get; set; }
 

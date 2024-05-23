@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.Classes;
 using DataAccessLayer.DaL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using S2_mvcUnitTest.FakeDaL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,32 +13,69 @@ namespace S2_mvcUnitTest.EntityTests
     [TestClass]
     public class LoginTest
     {
-        LoginService loginService = new LoginService(new LoginRepository());
+        private LoginService loginService;
 
+        public LoginTest()
+        {
+            loginService = new LoginService(new FakeLoginRepo());
+        }
 
         [TestMethod]
         public void LoggedIn_IsTrue()
         {
-            var (loggedIn, _, _) = loginService.Login("Jamal", "password");
+            // Arrange
+            string username = "admin";
+            string password = "password";
 
+            // Act
+            var (loggedIn, _, _) = loginService.Login(username, password);
 
-            Assert.AreEqual(1, Convert.ToInt32(loggedIn));
+            // Assert
+            Assert.AreEqual(true, loggedIn);
+        }
+
+        [TestMethod]
+        public void LoggedIn_IsFalse()
+        {
+            // Arrange
+            string username = "cilio";
+            string password = "password";
+
+            // Act
+            var (loggedIn, _, _) = loginService.Login(username, password);
+
+            // Assert
+            Assert.AreEqual(false, loggedIn);
         }
 
         [TestMethod]
         public void LoggedInUser_RoleAdmin_IsTrue()
         {
-            bool role = loginService.CheckRole("admin_cilio", "password");
+            // Arrange
+            string username = "admin";
+            string password = "password";
 
-            Assert.AreEqual(role, true);
+            // Act
+            bool role = loginService.CheckRole(username, password);
+
+            // Assert
+            Assert.AreEqual(true, role);
         }
 
         [TestMethod]
         public void LoggedInUser_RoleAdmin_IsFalse()
         {
-            bool role = loginService.CheckRole("Jamal", "password");
+            // Arrange
+            string username = "user";
+            string password = "password";
 
-            Assert.AreEqual(role, false);
+            // Act
+            bool role = loginService.CheckRole(username, password);
+
+            // Assert
+            Assert.AreEqual(false, role);
         }
     }
+
 }
+

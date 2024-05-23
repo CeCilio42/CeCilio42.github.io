@@ -339,12 +339,12 @@
         @foreach (var blog in Model.BlogList)
         {
             <div class="blog-post">
-                <img src="@blog.ProfilePicture">
+                <img src="@blog.user.profile_picture">
                 <div class="blog-title">@blog.Title</div>
                 <div class="blog-text">
                     @blog.Text
                 </div>
-                <div class="blog-category">Category: @blog.categorieTitle</div>
+                <div class="blog-category">Category: @blog.categorie.Title</div>
                 <div class="blog-buttons">
                     <form action="DeleteBlog" method="post">
                         <input type="hidden" name="Id" value="@blog.Id">
@@ -352,7 +352,7 @@
                     </form>
                 </div>
                 <br>
-                <div class="blog-username">Posted by: @blog.Username</div>
+                <div class="blog-username">Posted by: @blog.user.Username</div>
 
             </div>
         }

@@ -335,7 +335,7 @@
                 <div class="blog-text">
                     @blog.Text
                 </div>
-                <div class="blog-category">Category: @blog.categorieTitle</div>
+                <div class="blog-category">Category: @blog.categorie.Title</div>
                 <div class="blog-buttons">
                     <form action="DeleteBlogUser" method="post">
                         <input type="hidden" name="Id" value="@blog.Id">
@@ -358,12 +358,12 @@
         {
             <div class="blog-post">
                 <div class="blog-title">@blog.Title</div>
-                <img src="@blog.ProfilePicture">
-                <div class="blog-username">Posted by: @blog.Username</div>
+                <img src="@blog.user.Username">
+                <div class="blog-username">Posted by: @blog.user.Username</div>
                 <div class="blog-text">
                     @blog.Text
                 </div>
-                <div class="blog-category">Category: @blog.categorieTitle</div>
+                <div class="blog-category">Category: @blog.categorie.Title</div>
             </div>
         }
     </div>

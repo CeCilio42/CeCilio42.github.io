@@ -53,10 +53,10 @@ namespace BusinessLogicLayer
                         blogDTO.id = Convert.ToInt32(dataReader["id"]);
                         blogDTO.Name = dataReader["title"].ToString();
                         blogDTO.Description = dataReader["text"].ToString();
-                        blogDTO.CategoryName = dataReader["categorie_title"].ToString();
+                        blogDTO.categorie.Name = dataReader["categorie_title"].ToString();
                         blogDTO.Date = dataReader["date"].ToString();
-                        blogDTO.Username = dataReader["username"].ToString();
-                        blogDTO.ProfilePicture = dataReader["profile_picture"].ToString();
+                        blogDTO.user.Username = dataReader["username"].ToString();
+                        blogDTO.user.profile_picture = dataReader["profile_picture"].ToString();
 
                         blogs.Add(blogDTO);
                     }
@@ -104,10 +104,10 @@ namespace BusinessLogicLayer
                         blogDTO.id = Convert.ToInt32(dataReader["id"]);
                         blogDTO.Name = dataReader["title"].ToString();
                         blogDTO.Description = dataReader["text"].ToString();
-                        blogDTO.CategoryName = dataReader["categorie_title"].ToString();
+                        blogDTO.categorie.Name = dataReader["categorie_title"].ToString();
                         blogDTO.Date = dataReader["date"].ToString();
-                        blogDTO.Username = dataReader["username"].ToString();
-                        blogDTO.ProfilePicture = dataReader["profile_picture"].ToString();
+                        blogDTO.user.Username = dataReader["username"].ToString();
+                        blogDTO.user.profile_picture = dataReader["profile_picture"].ToString();
 
                         blogs.Add(blogDTO);
                     }
@@ -315,8 +315,8 @@ namespace BusinessLogicLayer
                         blogDTO.id = Convert.ToInt32(dataReader["id"]);
                         blogDTO.Name = dataReader["title"].ToString();
                         blogDTO.Description = dataReader["text"].ToString();
-                        blogDTO.CategoryName = dataReader["categorie_title"].ToString();
-                        blogDTO.ProfilePicture = dataReader["profile_picture"].ToString();
+                        blogDTO.user.profile_picture = dataReader["profile_picture"].ToString();
+                        blogDTO.categorie.Name = dataReader["categorie_title"].ToString();
 
                         blogs.Add(blogDTO);
                     }
