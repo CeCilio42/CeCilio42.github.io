@@ -1,6 +1,8 @@
 ﻿using BusinessLogicLayer;
 using BusinessLogicLayer.Classes;
 using BusinessLogicLayer.DTO_s;
+using BusinessLogicLayer.Entitys;
+using BusinessLogicLayer.Errors;
 using DataAccessLayer.Entitys;
 using DataLogicLayer.Entitys;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,6 +10,7 @@ using S2_mvcUnitTest.FakeDaL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -119,7 +122,7 @@ namespace S2_mvcUnitTest.EntityTests
         }
 
         [TestMethod]
-        public void CreateBlog_TitleInputIsBiggerThan100_SouldThrowException()
+        public void CreateBlog_TitleInputIsBiggerThan100_ShouldThrowException()
         {
             // Arrange
             BlogService blogService = new BlogService(new FakeBlogRepo());
@@ -133,8 +136,9 @@ namespace S2_mvcUnitTest.EntityTests
             int categoryId = 1;
             int? userId = 1;
 
-            // Act & Assert
-            blogService.CreateBlog(blog, categoryId, userId);
+
+            // Assert
+            Assert.ThrowsException<Exception>(() => blogService.CreateBlog(blog, categoryId, userId));
             
         }
 
@@ -154,7 +158,8 @@ namespace S2_mvcUnitTest.EntityTests
             int? userId = 1;
 
             // Act & Assert
-            blogService.CreateBlog(blog, categoryId, userId);
+            Assert.ThrowsException<Exception>(() => blogService.CreateBlog(blog, categoryId, userId));
+
 
         }
 
@@ -168,11 +173,8 @@ namespace S2_mvcUnitTest.EntityTests
 
 
             // Act
-            List<Blog> result = blogService.SearchBlogsByInput(input);
-
-
+            Assert.ThrowsException<CustomUserFriendlyException>(() => blogService.SearchBlogsByInput(input));
         }
     }
-
 }
 

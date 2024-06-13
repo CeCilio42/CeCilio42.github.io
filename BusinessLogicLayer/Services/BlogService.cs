@@ -42,11 +42,15 @@ namespace BusinessLogicLayer.Classes
             if (blog.Title.Length >= 100 && blog.Title.Length != 0)
             {
                 response.ErrorMessage = "Title must be shorter than 100 characters";
+                throw new Exception("Title must be shorter than 100 characters");
+
                 return response;
             }
             if (blog.Text.Length >= 1000 && blog.Text.Length != 0)
             {
                 response.ErrorMessage = "Blog must be shorter than 1000 characters";
+                throw new Exception("Blog must be shorter than 1000 characters");
+
                 return response;
             }
 

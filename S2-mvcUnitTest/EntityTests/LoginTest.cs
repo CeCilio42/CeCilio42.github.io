@@ -75,6 +75,7 @@ namespace S2_mvcUnitTest.EntityTests
             // Assert
             Assert.AreEqual(false, role);
         }
+    
     }
 
 }
